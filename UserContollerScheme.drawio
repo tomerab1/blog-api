@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-06-12T22:05:28.062Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0" etag="vpnheyJM36eV51H9s5FR" version="21.3.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-13T07:52:36.515Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0" etag="n15H9fyaFyuGkJjyudwa" version="21.3.8" type="github">
   <diagram name="Page-1" id="QEueSDJHl_8IlOvw4Woo">
-    <mxGraphModel dx="1013" dy="915" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="3300" math="0" shadow="0">
+    <mxGraphModel dx="1248" dy="1098" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2339" pageHeight="3300" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -170,7 +170,7 @@
         <mxCell id="gcQVHDRGR5eR76LzJhw5-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.004;entryY=0.056;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="gcQVHDRGR5eR76LzJhw5-71" target="gcQVHDRGR5eR76LzJhw5-64">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="gcQVHDRGR5eR76LzJhw5-71" value="UserRepository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B5B5B5;" vertex="1" parent="1">
+        <mxCell id="gcQVHDRGR5eR76LzJhw5-71" value="galleryRepository" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B5B5B5;" vertex="1" parent="1">
           <mxGeometry x="70" y="1200" width="200" height="30" as="geometry" />
         </mxCell>
         <mxCell id="gcQVHDRGR5eR76LzJhw5-73" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=-180;" vertex="1" parent="1">

@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { CommenteryModule } from './commentery/commentery.module';
 import { ConfigModule } from '@nestjs/config';
+import { FileModule } from './file/file.module';
 import Joi from 'joi';
 
 @Module({
@@ -26,6 +27,7 @@ import Joi from 'joi';
         PORT: Joi.number(),
       }),
     }),
+    FileModule,
   ],
   controllers: [],
   providers: [],

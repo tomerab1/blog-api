@@ -43,8 +43,9 @@ export class UserService {
   }
 
   public async updateUser(id: number, updateData: UpdateUserDto) {
-    const user = await this.usersRepository.findOne({ where: { id } });
-    if (!user) throw new UserNotFound(id);
-    return await this.usersRepository.update(user, updateData);
+    await this.usersRepository.update(id, updateData);
+    const updatedUser = await this.usersRepository.findOne({ where: { id } });
+    if (updatedUser) return updatedUser;
+    throw new UserNotFound(id);
   }
 }

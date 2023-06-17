@@ -3,11 +3,11 @@ import { UserModule } from './user/user.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-import { CommenteryModule } from './commentery/commentery.module';
+import { CommentaryModule } from './commentary/commentary.module';
 import { ConfigModule } from '@nestjs/config';
 import { FileModule } from './file/file.module';
 import { IamModule } from './iam/iam.module';
-import Joi from 'joi';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import Joi from 'joi';
     GalleryModule,
     AuthModule,
     DatabaseModule,
-    CommenteryModule,
+    CommentaryModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),

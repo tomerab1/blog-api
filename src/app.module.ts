@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { CommenteryModule } from './commentery/commentery.module';
 import { ConfigModule } from '@nestjs/config';
 import { FileModule } from './file/file.module';
+import { IamModule } from './iam/iam.module';
 import Joi from 'joi';
 
 @Module({
@@ -28,6 +29,7 @@ import Joi from 'joi';
       }),
     }),
     FileModule,
+    IamModule,
   ],
   controllers: [],
   providers: [],

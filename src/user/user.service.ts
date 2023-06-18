@@ -1,10 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from './entities/user.entity';
 import { Repository } from 'typeorm';
 import CreateUserDto from './dtos/createUser.dto';
 import UpdateUserDto from './dtos/updateUser.dto';
-import UserNotFound from './exceptions/userNotFound.exception';
 
 @Injectable()
 export class UserService {
@@ -18,7 +22,13 @@ export class UserService {
 
   public async getUser(id: number) {
     const user = await this.usersRepository.findOne({ where: { id } });
-    if (!user) throw new UserNotFound(id);
+    if (!user) throw new NotFoundException();
+    return user;
+  }
+
+  public async getUserByEmail(email: string) {
+    const user = await this.usersRepository.findOneBy({ email });
+    if (!user) throw new NotFoundException();
     return user;
   }
 
@@ -30,7 +40,7 @@ export class UserService {
 
   public async deleteUser(id: number) {
     const user = await this.usersRepository.findOne({ where: { id } });
-    if (!user) throw new UserNotFound(id);
+    if (!user) throw new NotFoundException();
     const deleteValue = await this.usersRepository.delete(user);
 
     if (deleteValue.affected) {
@@ -46,6 +56,6 @@ export class UserService {
     await this.usersRepository.update(id, updateData);
     const updatedUser = await this.usersRepository.findOne({ where: { id } });
     if (updatedUser) return updatedUser;
-    throw new UserNotFound(id);
+    throw new NotFoundException();
   }
 }

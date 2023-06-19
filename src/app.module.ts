@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { GalleryModule } from './gallery/gallery.module';
-import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { CommentaryModule } from './commentary/commentary.module';
 import { ConfigModule } from '@nestjs/config';
@@ -13,7 +12,6 @@ import * as Joi from 'joi';
   imports: [
     UserModule,
     GalleryModule,
-    AuthModule,
     DatabaseModule,
     CommentaryModule,
     FileModule,

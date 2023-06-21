@@ -1,6 +1,8 @@
+import { Exclude, Expose } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
+@Expose()
 export default class User {
   @PrimaryGeneratedColumn()
   public readonly id: number;
@@ -15,5 +17,6 @@ export default class User {
   public readonly email: string;
 
   @Column()
+  @Exclude()
   public readonly password: string;
 }

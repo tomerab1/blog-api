@@ -7,11 +7,15 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import CreateUserDto from './dtos/createUser.dto';
 import UpdateUserDto from './dtos/updateUser.dto';
+import { SerializeInterceptor } from './interceptors/serialize-interceptor/serialize-interceptor.interceptor';
+import User from './entities/user.entity';
 
+@UseInterceptors(new SerializeInterceptor(User))
 @Controller('user')
 export class UserController {
   constructor(private readonly usersService: UserService) {}

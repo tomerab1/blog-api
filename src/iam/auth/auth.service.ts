@@ -27,7 +27,7 @@ export class AuthService {
     const user = { ...signUpData };
     user.password = await this.hashService.hash(signUpData.password);
     try {
-      await this.userService.createUser(user);
+      await this.userService.create(user);
     } catch (error) {
       if (error.code === PostgresErrorCode.UniqueViolation)
         throw new ConflictException();
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   async signIn(signInData: SignInDto) {
-    const user = await this.userService.getUserByEmail(signInData.email);
+    const user = await this.userService.findOneEmail(signInData.email);
     if (!user) throw new UnauthorizedException('User doesnt exist');
     const isEqual = await this.hashService.compare(
       signInData.password,

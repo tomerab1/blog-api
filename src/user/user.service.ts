@@ -1,7 +1,6 @@
 import {
-  HttpException,
-  HttpStatus,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,46 +15,39 @@ export class UserService {
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) {}
 
-  public async getUsers() {
+  public async findAll() {
     return await this.usersRepository.find();
   }
 
-  public async getUser(id: number) {
+  public async findOne(id: number) {
     const user = await this.usersRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException();
     return user;
   }
 
-  public async getUserByEmail(email: string) {
+  public async findOneEmail(email: string) {
     const user = await this.usersRepository.findOneBy({ email });
     if (!user) throw new NotFoundException();
     return user;
   }
 
-  public async createUser(userData: CreateUserDto) {
+  public async create(userData: CreateUserDto) {
     const newUser = await this.usersRepository.create(userData);
     await this.usersRepository.save(newUser);
     return newUser;
   }
 
-  public async deleteUser(id: number) {
-    const user = await this.usersRepository.findOne({ where: { id } });
-    if (!user) throw new NotFoundException();
-    const deleteValue = await this.usersRepository.delete(user);
-
-    if (deleteValue.affected) {
-      throw new HttpException(
-        'Something went wrong...',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-    return user;
+  public async delete(id: number) {
+    const user = await this.findOne(id);
+    return this.usersRepository.remove(user);
   }
 
-  public async updateUser(id: number, updateData: UpdateUserDto) {
-    await this.usersRepository.update(id, updateData);
-    const updatedUser = await this.usersRepository.findOne({ where: { id } });
-    if (updatedUser) return updatedUser;
-    throw new NotFoundException();
+  public async update(id: number, updateData: UpdateUserDto) {
+    const user = await this.usersRepository.preload({
+      id,
+      ...updateData,
+    });
+    if (!user) throw new NotFoundException();
+    return this.usersRepository.save(user);
   }
 }

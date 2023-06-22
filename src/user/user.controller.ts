@@ -22,18 +22,18 @@ export class UserController {
 
   @Get()
   public async getUsers() {
-    return this.usersService.getUsers();
+    return this.usersService.findAll();
   }
 
   @Get('/:id')
   public async getUser(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.getUser(id);
+    return this.usersService.findOne(id);
   }
 
   @Post()
   public async createUser(@Body() createUser: CreateUserDto) {
     console.log(createUser);
-    return this.usersService.createUser(createUser);
+    return this.usersService.create(createUser);
   }
 
   @Patch('/:id')
@@ -41,11 +41,11 @@ export class UserController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: UpdateUserDto,
   ) {
-    return this.usersService.updateUser(id, updateData);
+    return this.usersService.update(id, updateData);
   }
 
   @Delete('/:id')
   public async deleteUser(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.deleteUser(id);
+    return this.usersService.delete(id);
   }
 }

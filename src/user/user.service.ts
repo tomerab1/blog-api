@@ -16,11 +16,14 @@ export class UserService {
   ) {}
 
   public async findAll() {
-    return await this.usersRepository.find();
+    return await this.usersRepository.find({ relations: { gallery: true } });
   }
 
   public async findOne(id: number) {
-    const user = await this.usersRepository.findOne({ where: { id } });
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: { gallery: true },
+    });
     if (!user) throw new NotFoundException();
     return user;
   }

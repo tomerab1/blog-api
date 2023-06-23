@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import User from 'src/user/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export default class Photo {
@@ -19,4 +20,7 @@ export default class Photo {
 
   @Column()
   public readonly uploadDate: Date;
+
+  @ManyToOne(() => User, (user: User) => user.gallery)
+  public readonly user: User;
 }

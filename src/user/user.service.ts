@@ -1,13 +1,10 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import User from './entities/user.entity';
 import { Repository } from 'typeorm';
-import CreateUserDto from './dtos/createUser.dto';
-import UpdateUserDto from './dtos/updateUser.dto';
+import CreateUserDto from './dtos/create-user.dto';
+import UpdateUserDto from './dtos/update-user.dto';
+import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto/pagination-query.dto';
 
 @Injectable()
 export class UserService {
@@ -15,8 +12,13 @@ export class UserService {
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) {}
 
-  public async findAll() {
-    return await this.usersRepository.find({ relations: { gallery: true } });
+  public async findAll(paginationDto: PaginationQueryDto) {
+    const { limit, offset } = paginationDto;
+    return await this.usersRepository.find({
+      relations: { gallery: true },
+      skip: offset,
+      take: limit,
+    });
   }
 
   public async findOne(id: number) {

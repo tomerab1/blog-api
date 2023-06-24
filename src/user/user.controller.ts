@@ -7,13 +7,15 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import CreateUserDto from './dtos/createUser.dto';
-import UpdateUserDto from './dtos/updateUser.dto';
-import { SerializeInterceptor } from './interceptors/serialize/serialize.interceptor';
+import CreateUserDto from './dtos/create-user.dto';
+import UpdateUserDto from './dtos/update-user.dto';
+import { SerializeInterceptor } from '../common/interceptors/serialize/serialize.interceptor';
 import User from './entities/user.entity';
+import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto/pagination-query.dto';
 
 @UseInterceptors(new SerializeInterceptor(User))
 @Controller('user')
@@ -21,8 +23,8 @@ export class UserController {
   constructor(private readonly usersService: UserService) {}
 
   @Get()
-  public async getUsers() {
-    return this.usersService.findAll();
+  public async getUsers(@Query() paginationDto: PaginationQueryDto) {
+    return this.usersService.findAll(paginationDto);
   }
 
   @Get('/:id')

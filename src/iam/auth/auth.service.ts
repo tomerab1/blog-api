@@ -4,7 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import CreateUserDto from 'src/user/dtos/createUser.dto';
+import CreateUserDto from 'src/user/dtos/create-user.dto';
 import { UserService } from 'src/user/user.service';
 import SignInDto from './dtos/signIn.dto';
 import HashingService from 'src/iam/hashing/hashing.service';

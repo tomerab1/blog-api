@@ -1,7 +1,14 @@
 import User from 'src/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
+@Index(['key'])
 export default class Photo {
   @PrimaryGeneratedColumn()
   public readonly id: number;

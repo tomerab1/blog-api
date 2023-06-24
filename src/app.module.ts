@@ -4,7 +4,6 @@ import { GalleryModule } from './gallery/gallery.module';
 import { DatabaseModule } from './database/database.module';
 import { CommentaryModule } from './commentary/commentary.module';
 import { ConfigModule } from '@nestjs/config';
-import { FileModule } from './file/file.module';
 import { IamModule } from './iam/iam.module';
 import * as Joi from 'joi';
 
@@ -14,7 +13,6 @@ import * as Joi from 'joi';
     GalleryModule,
     DatabaseModule,
     CommentaryModule,
-    FileModule,
     IamModule,
     ConfigModule.forRoot({
       validationSchema: Joi.object({

@@ -1,5 +1,5 @@
 import { Exclude, Expose } from 'class-transformer';
-import Photo from 'src/gallery/entities/photo.entity';
+import Image from 'src/image/entities/image.entity';
 import {
   Column,
   Entity,
@@ -28,6 +28,6 @@ export default class User {
   public readonly password: string;
 
   @JoinTable()
-  @OneToMany(() => Photo, (photo: Photo) => photo.user, { cascade: true })
-  public readonly gallery: Photo[];
+  @OneToMany(() => Image, (photo: Image) => photo.user, { cascade: true })
+  public readonly gallery: Image;
 }

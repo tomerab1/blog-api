@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
-import { GalleryModule } from './gallery/gallery.module';
+import { ImageModule } from './image/image.module';
 import { DatabaseModule } from './database/database.module';
 import { CommentaryModule } from './commentary/commentary.module';
 import { ConfigModule } from '@nestjs/config';
@@ -10,7 +10,7 @@ import * as Joi from 'joi';
 @Module({
   imports: [
     UserModule,
-    GalleryModule,
+    ImageModule,
     DatabaseModule,
     CommentaryModule,
     IamModule,
@@ -25,6 +25,10 @@ import * as Joi from 'joi';
         JWT_TOKEN_AUDIENCE: Joi.string().required(),
         JWT_TOKEN_ISSUER: Joi.string().required(),
         JWT_ACCESS_TOKEN_TTL: Joi.string().required(),
+        AWS_REGION: Joi.string().required(),
+        AWS_BUCKET_NAME: Joi.string().required(),
+        AWS_ACCESS_KEY: Joi.string().required(),
+        AWS_SECRET_KEY: Joi.string().required(),
         PORT: Joi.number(),
       }),
     }),

@@ -9,24 +9,24 @@ import {
 
 @Entity()
 @Index(['key'])
-export default class Photo {
+export default class Image {
   @PrimaryGeneratedColumn()
   public readonly id: number;
 
   @Column()
-  public readonly key: number;
+  public readonly key: string;
 
   @Column()
   public readonly uri: string;
 
   @Column()
-  public readonly title: string;
+  public readonly fileName: string;
 
-  @Column()
-  public readonly description: string;
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  public readonly uploadedAt: Date;
 
-  @Column()
-  public readonly uploadDate: Date;
+  @Column({ nullable: true })
+  public readonly updatedAt: Date;
 
   @ManyToOne(() => User, (user: User) => user.gallery)
   public readonly user: User;

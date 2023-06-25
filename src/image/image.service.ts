@@ -8,9 +8,9 @@ import { ConfigService } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
 import { v4 as uuid } from 'uuid';
 import { JwtService } from '@nestjs/jwt';
-import { extracTokenFromHeaders } from 'src/common/extract-token.helper';
 import { Request } from 'express';
 import { UserService } from 'src/user/user.service';
+import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 
 @Injectable()
 export class ImageService {
@@ -36,7 +36,7 @@ export class ImageService {
       })
       .promise();
 
-    const user = await this.userService.findOne(this.getUserId(request));
+    const user = await this.userService.findOne(request[REQUEST_USER_KEY].sub);
 
     const createdImage = this.imageRepository.create({
       key: uploadResult.Key,
@@ -49,12 +49,4 @@ export class ImageService {
   }
 
   async update(updateImage: Request) {}
-
-  private getUserId(request: Request): number {
-    const payload = extracTokenFromHeaders(request);
-    const payloadDecoded = this.jwtService.verify(payload, {
-      secret: this.configService.get('JWT_SECRET'),
-    });
-    return +payloadDecoded.sub;
-  }
 }

@@ -1,9 +1,9 @@
-import User from 'src/user/entities/user.entity';
+import Post from 'src/post/entities/post.entity';
 import {
   Column,
   Entity,
   Index,
-  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -28,6 +28,6 @@ export default class Image {
   @Column({ nullable: true })
   public readonly updatedAt: Date;
 
-  @ManyToOne(() => User, (user: User) => user.gallery)
-  public readonly user: User;
+  @OneToOne(() => Post, (post: Post) => post.image)
+  public readonly post: Post;
 }

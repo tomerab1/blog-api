@@ -1,10 +1,10 @@
 import { Exclude, Expose } from 'class-transformer';
-import Image from 'src/image/entities/image.entity';
+import Post from 'src/post/entities/post.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -27,7 +27,7 @@ export default class User {
   @Exclude()
   public readonly password: string;
 
-  @JoinColumn()
-  @OneToMany(() => Image, (photo: Image) => photo.user, { cascade: true })
-  public readonly gallery: Image;
+  @JoinTable()
+  @ManyToMany(() => Post, (post: Post) => post.user, { cascade: true })
+  public readonly posts: Post[];
 }

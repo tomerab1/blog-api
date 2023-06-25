@@ -16,7 +16,6 @@ import { JwtModule } from '@nestjs/jwt';
     MulterModule.register(),
     UserModule,
     ConfigModule,
-    JwtModule,
   ],
 })
 export class ImageModule {}

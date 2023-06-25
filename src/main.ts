@@ -25,8 +25,8 @@ async function bootstrap() {
   config.update({
     region: configService.get('AWS_REGION'),
     credentials: {
-      accessKeyId: configService.get('AWS_ACCESS_KEY'),
-      secretAccessKey: configService.get('AWS_SECRET_KEY'),
+      accessKeyId: configService.get('AWS_ACCESS_KEY_ID'),
+      secretAccessKey: configService.get('AWS_SECRET_ACCESS_KEY'),
     },
   });
 

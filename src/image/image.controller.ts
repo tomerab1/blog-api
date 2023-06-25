@@ -1,17 +1,16 @@
 import {
   Body,
   Controller,
-  FileTypeValidator,
   Get,
   HttpCode,
   HttpStatus,
   Param,
-  ParseFilePipe,
   Post,
+  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { Express } from 'express';
+import { Express, Request } from 'express';
 import { ImageService } from './image.service';
 import UpdateImageDto from './dtos/update-image.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -22,8 +21,11 @@ export class ImageController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
-    return this.imageService.create(file.buffer, file.originalname);
+  uploadImage(
+    @Req() request: Request,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.imageService.create(request, file.buffer, file.originalname);
   }
 
   @Post()

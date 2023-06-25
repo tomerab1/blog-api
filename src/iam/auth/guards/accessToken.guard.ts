@@ -8,6 +8,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { extracTokenFromHeaders } from 'src/common/extract-token.helper';
 import jwtConfig from 'src/iam/config/jwt.config';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 
@@ -21,7 +22,7 @@ export class AccessTokenGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+    const token = extracTokenFromHeaders(request);
 
     if (!token) throw new UnauthorizedException();
 
@@ -36,10 +37,5 @@ export class AccessTokenGuard implements CanActivate {
     }
 
     return true;
-  }
-
-  private extractTokenFromHeader(request: Request) {
-    const [_, token] = request.headers.authorization?.split(' ') ?? [];
-    return token;
   }
 }

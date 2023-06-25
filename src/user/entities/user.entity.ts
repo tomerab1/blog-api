@@ -3,7 +3,7 @@ import Image from 'src/image/entities/image.entity';
 import {
   Column,
   Entity,
-  JoinTable,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -27,7 +27,7 @@ export default class User {
   @Exclude()
   public readonly password: string;
 
-  @JoinTable()
+  @JoinColumn()
   @OneToMany(() => Image, (photo: Image) => photo.user, { cascade: true })
   public readonly gallery: Image;
 }

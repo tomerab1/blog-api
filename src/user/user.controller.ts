@@ -8,16 +8,12 @@ import {
   Patch,
   Post,
   Query,
-  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import CreateUserDto from './dtos/create-user.dto';
 import UpdateUserDto from './dtos/update-user.dto';
-import { SerializeInterceptor } from '../common/interceptors/serialize/serialize.interceptor';
-import User from './entities/user.entity';
-import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto/pagination-query.dto';
+import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 
-@UseInterceptors(new SerializeInterceptor(User))
 @Controller('user')
 export class UserController {
   constructor(private readonly usersService: UserService) {}

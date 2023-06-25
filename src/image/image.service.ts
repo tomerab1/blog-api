@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Image from './entities/image.entity';
@@ -57,6 +61,12 @@ export class ImageService {
     } catch (err) {
       throw new InternalServerErrorException(err);
     }
+  }
+
+  async delete(key: string) {
+    const image = await this.imageRepository.findOne({ where: { key } });
+    if (!image) throw new NotFoundException();
+    return await this.imageRepository.remove(image);
   }
 
   async update(updateImage: Request) {}

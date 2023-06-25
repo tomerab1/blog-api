@@ -5,6 +5,9 @@ import { DatabaseModule } from './database/database.module';
 import { CommentaryModule } from './commentary/commentary.module';
 import { ConfigModule } from '@nestjs/config';
 import { IamModule } from './iam/iam.module';
+import { PostConrollerController } from './post/post.controller';
+import { PostService } from './post/post.service';
+import { PostModule } from './post/post.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -32,8 +35,9 @@ import * as Joi from 'joi';
         PORT: Joi.number(),
       }),
     }),
+    PostModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [PostConrollerController],
+  providers: [PostService],
 })
 export class AppModule {}

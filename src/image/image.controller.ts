@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Patch,
   Post,
   Query,
@@ -32,13 +33,15 @@ export class ImageController {
     return this.imageService.create(file.buffer, file.originalname);
   }
 
-  @Patch()
+  @Patch(':key')
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(FileInterceptor('file'))
   update(
-    @Body() { key }: ImageQueryDto,
+    @Param() { key }: ImageQueryDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    console.log(file);
+    console.log(key);
     return this.imageService.update(key, file);
   }
 

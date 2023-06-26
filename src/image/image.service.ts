@@ -92,7 +92,7 @@ export class ImageService {
       throw new NotFoundException(`image with key=${key} was not found`);
 
     await this.deleteImageFromS3(key);
-    const newKey = `${uuid()}-${file.filename}`;
+    const newKey = `${uuid()}-${file.originalname}`;
     await this.uploadFileToS3(file.buffer, newKey);
 
     const newProperties = {

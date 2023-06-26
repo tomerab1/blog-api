@@ -21,6 +21,9 @@ export default class User {
   @Exclude()
   public readonly password: string;
 
-  @OneToMany(() => Post, (post: Post) => post.user, { cascade: true })
+  @OneToMany(() => Post, (post: Post) => post.user, {
+    cascade: true,
+    eager: true,
+  })
   public readonly posts: Post[];
 }

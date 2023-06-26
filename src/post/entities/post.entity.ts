@@ -23,7 +23,7 @@ export default class Post {
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   public readonly uploadDate: Date;
 
-  @OneToOne(() => Image, { cascade: true })
+  @OneToOne(() => Image, { cascade: true, eager: true })
   @JoinColumn()
   public readonly image: Image;
 

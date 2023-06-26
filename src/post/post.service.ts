@@ -14,20 +14,20 @@ import { Request } from 'express';
 @Injectable()
 export class PostService {
   constructor(
-    @InjectRepository(Post) private readonly postService: Repository<Post>,
+    @InjectRepository(Post) private readonly postRepository: Repository<Post>,
     private readonly imageService: ImageService,
     private readonly userSerivce: UserService,
   ) {}
 
   async findAll({ offset, limit }: PaginationQueryDto) {
-    return await this.postService.find({
+    return await this.postRepository.find({
       skip: offset,
       take: limit,
     });
   }
 
   async findOne(id: number) {
-    const post = await this.postService.findOne({
+    const post = await this.postRepository.findOne({
       where: { id },
       relations: { image: true },
     });
@@ -38,17 +38,17 @@ export class PostService {
 
   async create(request: Request, createPostDto: CreatePostDto) {
     const user = await this.userSerivce.findOne(request[REQUEST_USER_KEY].sub);
-    const post = await this.postService.create({
+    const post = await this.postRepository.create({
       ...createPostDto,
       user,
     });
-    await this.postService.save(post);
+    await this.postRepository.save(post);
     return post;
   }
 
   async update(request: Request, id: number, updatePostDto: UpdatePostDto) {
     const user = await this.userSerivce.findOne(request[REQUEST_USER_KEY].sub);
-    const post = await this.postService.preload({
+    const post = await this.postRepository.preload({
       id,
       ...updatePostDto,
       user,
@@ -60,12 +60,15 @@ export class PostService {
 
   async delete(id: number) {
     const post = await this.findOne(id);
-    return this.postService.remove(post);
+    return this.postRepository.remove(post);
   }
 
   async addImage(id: number, { key }: AttachImageDto) {
-    const post = await this.findOne(id);
     const image = await this.imageService.findOne(key);
-    Object.assign(post, image);
+    const updatedPost = await this.postRepository.preload({
+      id,
+      image,
+    });
+    return await this.postRepository.save(updatedPost);
   }
 }

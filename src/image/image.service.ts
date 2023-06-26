@@ -22,7 +22,9 @@ export class ImageService {
 
   async findAll(paginationDto: PaginationQueryDto) {}
 
-  async findOne(key: string) {}
+  async findOne(key: string) {
+    return this.imageRepository.findOne({ where: { key } });
+  }
 
   async create(request: Request, buffer: Buffer, fileName: string) {
     const key = `${uuid()}-${fileName}`;

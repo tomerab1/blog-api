@@ -1,10 +1,71 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Post from './entities/post.entity';
+import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import { Repository } from 'typeorm';
+import CreatePostDto from './dtos/create-post.dto';
+import UpdatePostDto from './dtos/update-post.dto';
+import AttachImageDto from './dtos/attach-image.dto';
+import { ImageService } from 'src/image/image.service';
+import { UserService } from 'src/user/user.service';
+import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
+import { Request } from 'express';
 
 @Injectable()
 export class PostService {
   constructor(
-    @InjectRepository(Post) private readonly postService: PostService,
+    @InjectRepository(Post) private readonly postService: Repository<Post>,
+    private readonly imageService: ImageService,
+    private readonly userSerivce: UserService,
   ) {}
+
+  async findAll({ offset, limit }: PaginationQueryDto) {
+    return await this.postService.find({
+      skip: offset,
+      take: limit,
+    });
+  }
+
+  async findOne(id: number) {
+    const post = await this.postService.findOne({
+      where: { id },
+      relations: { image: true },
+    });
+
+    if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);
+    return post;
+  }
+
+  async create(request: Request, createPostDto: CreatePostDto) {
+    const user = await this.userSerivce.findOne(request[REQUEST_USER_KEY].sub);
+    const post = await this.postService.create({
+      ...createPostDto,
+      user,
+    });
+    await this.postService.save(post);
+    return post;
+  }
+
+  async update(request: Request, id: number, updatePostDto: UpdatePostDto) {
+    const user = await this.userSerivce.findOne(request[REQUEST_USER_KEY].sub);
+    const post = await this.postService.preload({
+      id,
+      ...updatePostDto,
+      user,
+    });
+
+    if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);
+    return post;
+  }
+
+  async delete(id: number) {
+    const post = await this.findOne(id);
+    return this.postService.remove(post);
+  }
+
+  async addImage(id: number, { key }: AttachImageDto) {
+    const post = await this.findOne(id);
+    const image = await this.imageService.findOne(key);
+    Object.assign(post, image);
+  }
 }

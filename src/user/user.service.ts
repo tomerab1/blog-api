@@ -15,7 +15,6 @@ export class UserService {
   public async findAll(paginationDto: PaginationQueryDto) {
     const { limit, offset } = paginationDto;
     return await this.usersRepository.find({
-      relations: { gallery: true },
       skip: offset,
       take: limit,
     });
@@ -24,7 +23,7 @@ export class UserService {
   public async findOne(id: number) {
     const user = await this.usersRepository.findOne({
       where: { id },
-      relations: { gallery: true },
+      relations: { posts: true },
     });
     if (!user) throw new NotFoundException();
     return user;

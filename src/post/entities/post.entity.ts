@@ -4,7 +4,7 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -23,10 +23,10 @@ export default class Post {
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   public readonly uploadDate: Date;
 
-  @OneToOne(() => Image, (image: Image) => image.post, { cascade: true })
+  @OneToOne(() => Image, { cascade: true })
   @JoinColumn()
   public readonly image: Image;
 
-  @ManyToMany(() => User, (user: User) => user.posts)
+  @ManyToOne(() => User, (user: User) => user.posts)
   public readonly user: User;
 }

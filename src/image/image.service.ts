@@ -7,12 +7,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Image from './entities/image.entity';
 import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
-import UpdateImageDto from './dtos/update-image.dto';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuid } from 'uuid';
 import { Request } from 'express';
-import { UserService } from 'src/user/user.service';
-import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 @Injectable()
@@ -21,25 +18,22 @@ export class ImageService {
     @InjectRepository(Image)
     private readonly imageRepository: Repository<Image>,
     private readonly configService: ConfigService,
-    private readonly userService: UserService,
   ) {}
 
   async findAll(paginationDto: PaginationQueryDto) {}
 
-  async findOne(id: number) {}
+  async findOne(key: string) {}
 
   async create(request: Request, buffer: Buffer, fileName: string) {
     const key = `${uuid()}-${fileName}`;
     await this.uploadFileToS3(buffer, key);
 
-    const user = await this.userService.findOne(request[REQUEST_USER_KEY].sub);
     const createdImage = this.imageRepository.create({
       key: key,
       uri: `https://${this.configService.get(
         'AWS_BUCKET_NAME',
       )}.s3.amazonaws.com/${key}`,
       fileName,
-      user: user,
     });
 
     return this.imageRepository.save(createdImage);

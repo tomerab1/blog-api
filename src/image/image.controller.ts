@@ -15,7 +15,6 @@ import {
 } from '@nestjs/common';
 import { Express, Request } from 'express';
 import { ImageService } from './image.service';
-import UpdateImageDto from './dtos/update-image.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import ImageQueryDto from './dtos/image-query.dto';
 
@@ -37,7 +36,7 @@ export class ImageController {
 
   @Patch()
   @HttpCode(HttpStatus.OK)
-  updateImage(@Body() updateImage: UpdateImageDto) {}
+  updateImage(@Body() updateImage) {}
 
   @Delete()
   deleteImage(@Query() imageQueryDto: ImageQueryDto) {}

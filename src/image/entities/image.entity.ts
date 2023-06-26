@@ -27,7 +27,4 @@ export default class Image {
 
   @Column({ nullable: true })
   public readonly updatedAt: Date;
-
-  @OneToOne(() => Post, (post: Post) => post.image)
-  public readonly post: Post;
 }

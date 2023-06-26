@@ -5,39 +5,45 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Param,
   Patch,
   Post,
   Query,
-  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { Express, Request } from 'express';
+import { Express } from 'express';
 import { ImageService } from './image.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import ImageQueryDto from './dtos/image-query.dto';
+import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 
 @Controller('upload-image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
   @Get()
-  getImage(@Query() imageQueryDto: ImageQueryDto) {}
+  find(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.imageService.find(paginationQueryDto);
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  uploadImage(
-    @Req() request: Request,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    return this.imageService.create(request, file.buffer, file.originalname);
+  uploadImage(@UploadedFile() file: Express.Multer.File) {
+    return this.imageService.create(file.buffer, file.originalname);
   }
 
   @Patch()
   @HttpCode(HttpStatus.OK)
-  updateImage(@Body() updateImage) {}
+  @UseInterceptors(FileInterceptor('file'))
+  update(
+    @Body() { key }: ImageQueryDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.imageService.update(key, file);
+  }
 
   @Delete()
-  deleteImage(@Query() imageQueryDto: ImageQueryDto) {}
+  delete(@Query() { key }: ImageQueryDto) {
+    return this.imageService.delete(key);
+  }
 }

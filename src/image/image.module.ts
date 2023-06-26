@@ -5,10 +5,22 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import Image from './entities/image.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
+import { S3Client } from '@aws-sdk/client-s3';
 
 @Module({
   controllers: [ImageController],
-  providers: [ImageService, ConfigService],
+  providers: [
+    ImageService,
+    {
+      provide: S3Client,
+      useFactory: (configService: ConfigService) => {
+        return new S3Client({
+          region: configService.get('AWS_REGION'),
+        });
+      },
+      inject: [ConfigService],
+    },
+  ],
   exports: [ImageService],
   imports: [
     TypeOrmModule.forFeature([Image]),

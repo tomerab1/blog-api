@@ -9,8 +9,11 @@ import Image from './entities/image.entity';
 import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuid } from 'uuid';
-import { Request } from 'express';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 
 @Injectable()
 export class ImageService {
@@ -18,15 +21,21 @@ export class ImageService {
     @InjectRepository(Image)
     private readonly imageRepository: Repository<Image>,
     private readonly configService: ConfigService,
+    private readonly s3Service: S3Client,
   ) {}
 
-  async findAll(paginationDto: PaginationQueryDto) {}
+  async find({ offset, limit }: PaginationQueryDto) {
+    return this.imageRepository.find({
+      skip: offset,
+      take: limit,
+    });
+  }
 
   async findOne(key: string) {
     return this.imageRepository.findOne({ where: { key } });
   }
 
-  async create(request: Request, buffer: Buffer, fileName: string) {
+  async create(buffer: Buffer, fileName: string) {
     const key = `${uuid()}-${fileName}`;
     await this.uploadFileToS3(buffer, key);
 
@@ -42,12 +51,8 @@ export class ImageService {
   }
 
   private async uploadFileToS3(body: Buffer, key: string) {
-    const s3 = new S3Client({
-      region: this.configService.get('AWS_REGION'),
-    });
-
     try {
-      s3.send(
+      this.s3Service.send(
         new PutObjectCommand({
           Bucket: this.configService.get('AWS_BUCKET_NAME'),
           Body: body,
@@ -55,15 +60,51 @@ export class ImageService {
         }),
       );
     } catch (err) {
-      throw new InternalServerErrorException(err);
+      console.log(err);
+      throw new InternalServerErrorException();
+    }
+  }
+
+  private async deleteImageFromS3(key: string) {
+    try {
+      await this.s3Service.send(
+        new DeleteObjectCommand({
+          Bucket: this.configService.get('AWS_BUCKET_NAME'),
+          Key: key,
+        }),
+      );
+    } catch (err) {
+      console.log(err);
+      throw new InternalServerErrorException();
     }
   }
 
   async delete(key: string) {
     const image = await this.imageRepository.findOne({ where: { key } });
     if (!image) throw new NotFoundException();
-    return await this.imageRepository.remove(image);
+    await this.deleteImageFromS3(key);
+    return this.imageRepository.remove(image);
   }
 
-  async update(updateImage: Request) {}
+  async update(key: string, file: Express.Multer.File) {
+    const image = await this.findOne(key);
+    if (!image)
+      throw new NotFoundException(`image with key=${key} was not found`);
+
+    await this.deleteImageFromS3(key);
+    const newKey = `${uuid()}-${file.filename}`;
+    await this.uploadFileToS3(file.buffer, newKey);
+
+    const newProperties = {
+      key: newKey,
+      uri: `https://${this.configService.get(
+        'AWS_BUCKET_NAME',
+      )}.s3.amazonaws.com/${newKey}`,
+      fileName: file.filename,
+      updatedAt: new Date(),
+    } satisfies Partial<Image>;
+
+    Object.assign(image, newProperties);
+    return await this.imageRepository.save(image);
+  }
 }

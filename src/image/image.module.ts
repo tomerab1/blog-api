@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ImageController } from './image.controller';
 import { ImageService } from './image.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,7 +13,8 @@ import { S3Client } from '@aws-sdk/client-s3';
     ImageService,
     {
       provide: S3Client,
-      useFactory: (configService: ConfigService) => {
+      useFactory: async (configService: ConfigService) => {
+        Logger.debug(`[!] Initializing S3Client...`);
         return new S3Client({
           region: configService.get('AWS_REGION'),
         });

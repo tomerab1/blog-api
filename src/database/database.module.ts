@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -7,18 +7,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('POSTGRES_HOST'),
-        port: configService.get('POSTGRES_PORT'),
-        username: configService.get('POSTGRES_USER'),
-        password: configService.get('POSTGRES_PASSWORD'),
-        database: configService.get('POSTGRES_DB'),
-        retryAttempts: configService.get('DB_MAX_RETRY'),
-        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: true,
-        autoLoadEntities: true,
-      }),
+      useFactory: async (configService: ConfigService) => {
+        Logger.debug(`[!] Initializing postgres...`);
+        return {
+          type: 'postgres',
+          host: configService.get('POSTGRES_HOST'),
+          port: configService.get('POSTGRES_PORT'),
+          username: configService.get('POSTGRES_USER'),
+          password: configService.get('POSTGRES_PASSWORD'),
+          database: configService.get('POSTGRES_DB'),
+          retryAttempts: configService.get('DB_MAX_RETRY'),
+          entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+          synchronize: true,
+          autoLoadEntities: true,
+        };
+      },
     }),
   ],
   providers: [],

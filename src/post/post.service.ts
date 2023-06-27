@@ -5,8 +5,6 @@ import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 import { Repository } from 'typeorm';
 import CreatePostDto from './dtos/create-post.dto';
 import UpdatePostDto from './dtos/update-post.dto';
-import AttachImageDto from './dtos/attach-image.dto';
-import { ImageService } from 'src/image/image.service';
 import { UserService } from 'src/user/user.service';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 import { Request } from 'express';
@@ -15,7 +13,6 @@ import { Request } from 'express';
 export class PostService {
   constructor(
     @InjectRepository(Post) private readonly postRepository: Repository<Post>,
-    private readonly imageService: ImageService,
     private readonly userSerivce: UserService,
   ) {}
 
@@ -29,7 +26,7 @@ export class PostService {
   async findOne(id: number) {
     const post = await this.postRepository.findOne({
       where: { id },
-      relations: { image: true },
+      relations: { images: true },
     });
 
     if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);
@@ -55,20 +52,11 @@ export class PostService {
     });
 
     if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);
-    return post;
+    return this.postRepository.save(post);
   }
 
   async delete(id: number) {
     const post = await this.findOne(id);
     return this.postRepository.remove(post);
-  }
-
-  async addImage(id: number, { key }: AttachImageDto) {
-    const image = await this.imageService.findOne(key);
-    const updatedPost = await this.postRepository.preload({
-      id,
-      image,
-    });
-    return await this.postRepository.save(updatedPost);
   }
 }

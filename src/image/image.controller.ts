@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -8,16 +9,17 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { Express } from 'express';
+import { Express, Request } from 'express';
 import { ImageService } from './image.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import ImageQueryDto from './dtos/image-query.dto';
 import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 
-@Controller('upload-image')
+@Controller('image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
@@ -28,8 +30,18 @@ export class ImageController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
-    return this.imageService.create(file.buffer, file.originalname);
+  uploadImage(
+    @Req() request: Request,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.imageService.create(request, file.buffer, file.originalname);
+  }
+
+  // Create route to attach image to post
+  @Post('/add-to-post/:id')
+  @HttpCode(HttpStatus.OK)
+  addImageToPost(@Param('id') id: number, @Body() { key }: ImageQueryDto) {
+    return this.imageService.addImageToPost(id, key);
   }
 
   @Patch(':key')

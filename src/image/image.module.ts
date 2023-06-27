@@ -6,6 +6,8 @@ import Image from './entities/image.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express';
 import { S3Client } from '@aws-sdk/client-s3';
+import { UserModule } from 'src/user/user.module';
+import { PostModule } from 'src/post/post.module';
 
 @Module({
   controllers: [ImageController],
@@ -27,6 +29,8 @@ import { S3Client } from '@aws-sdk/client-s3';
     TypeOrmModule.forFeature([Image]),
     MulterModule.register(),
     ConfigModule,
+    UserModule,
+    PostModule,
   ],
 })
 export class ImageModule {}

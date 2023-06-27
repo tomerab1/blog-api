@@ -1,9 +1,10 @@
 import Post from 'src/post/entities/post.entity';
+import User from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
   Index,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -27,4 +28,10 @@ export default class Image {
 
   @Column({ nullable: true })
   public readonly updatedAt: Date;
+
+  @ManyToOne(() => Post, (post: Post) => post.images)
+  public readonly post: Post;
+
+  @ManyToOne(() => User, (user: User) => user.images)
+  public readonly owner: User;
 }

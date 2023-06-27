@@ -1,6 +1,14 @@
 import { Exclude, Expose } from 'class-transformer';
+import Image from 'src/image/entities/image.entity';
 import Post from 'src/post/entities/post.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @Expose()
@@ -26,4 +34,7 @@ export default class User {
     eager: true,
   })
   public readonly posts: Post[];
+
+  @OneToMany(() => Image, (image: Image) => image.owner, { cascade: true })
+  public readonly images: Image[];
 }

@@ -1,3 +1,4 @@
+import Comment from 'src/commentary/entities/comment.entity';
 import Image from 'src/image/entities/image.entity';
 import User from 'src/user/entities/user.entity';
 import {
@@ -5,6 +6,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -29,4 +31,7 @@ export default class Post {
 
   @ManyToOne(() => User, (user: User) => user.posts)
   public readonly user: User;
+
+  @OneToMany(() => Comment, (comments: Comment) => comments.post)
+  public readonly comments: Comment[];
 }

@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
@@ -40,13 +39,11 @@ export class ImageController {
     @Param() { key }: ImageQueryDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(file);
-    console.log(key);
     return this.imageService.update(key, file);
   }
 
-  @Delete()
-  delete(@Query() { key }: ImageQueryDto) {
+  @Delete(':key')
+  delete(@Param() { key }: ImageQueryDto) {
     return this.imageService.delete(key);
   }
 }

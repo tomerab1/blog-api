@@ -6,6 +6,8 @@ import { CommentaryModule } from './commentary/commentary.module';
 import { ConfigModule } from '@nestjs/config';
 import { IamModule } from './iam/iam.module';
 import { PostModule } from './post/post.module';
+import { EmailModule } from './email/email.module';
+import { TagModule } from './tag/tag.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -34,6 +36,8 @@ import * as Joi from 'joi';
         PORT: Joi.number(),
       }),
     }),
+    EmailModule,
+    TagModule,
   ],
   controllers: [],
   providers: [],

@@ -39,8 +39,7 @@ export class PostService {
       ...createPostDto,
       user,
     });
-    await this.postRepository.save(post);
-    return post;
+    return await this.postRepository.save(post);
   }
 
   async update(request: Request, id: number, updatePostDto: UpdatePostDto) {

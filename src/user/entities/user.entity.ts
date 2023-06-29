@@ -4,6 +4,7 @@ import Post from 'src/post/entities/post.entity';
 import {
   Column,
   Entity,
+  Generated,
   JoinColumn,
   OneToMany,
   OneToOne,
@@ -24,6 +25,13 @@ export default class User {
 
   @Column({ unique: true })
   public readonly email: string;
+
+  @Column({ default: false })
+  public readonly isEmailVerified: boolean;
+
+  @Column()
+  @Generated('uuid')
+  public readonly emailVerificationUuid;
 
   @Column()
   @Exclude()

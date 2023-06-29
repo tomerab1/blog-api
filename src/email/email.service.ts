@@ -1,26 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import { CreateEmailDto } from './dto/create-email.dto';
-import { UpdateEmailDto } from './dto/update-email.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { SMTP_TOKEN } from './constants';
+import { Transporter } from 'nodemailer';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class EmailService {
-  create(createEmailDto: CreateEmailDto) {
-    return 'This action adds a new email';
-  }
+  constructor(
+    @Inject(SMTP_TOKEN)
+    private readonly transporter: Transporter<SMTPTransport.SentMessageInfo>,
+    private readonly userService: UserService,
+  ) {}
 
-  findAll() {
-    return `This action returns all email`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} email`;
-  }
-
-  update(id: number, updateEmailDto: UpdateEmailDto) {
-    return `This action updates a #${id} email`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} email`;
+  async sendEmail() {
+    await this.transporter.sendMail({
+      from: '',
+      to: '',
+      subject: '',
+      text: '',
+      html: '',
+    });
   }
 }

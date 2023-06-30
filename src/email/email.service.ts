@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SMTP_TOKEN } from './constants';
 import { UserService } from 'src/user/user.service';
-import SmtpBase from './smtp-base.interface';
+import SmtpBase from './interfaces/smtp-base.interface';
 import User from 'src/user/entities/user.entity';
 
 @Injectable()

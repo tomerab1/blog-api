@@ -1,5 +1,5 @@
 import { Transporter, createTransport } from 'nodemailer';
-import SmtpBase from '../smtp-base.interface';
+import SmtpBase from '../interfaces/smtp-base.interface';
 import { ConfigService } from '@nestjs/config';
 import { InternalServerErrorException } from '@nestjs/common';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';

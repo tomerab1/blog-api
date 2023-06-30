@@ -28,12 +28,6 @@ export class UserController {
     return this.usersService.findOne(id);
   }
 
-  @Post()
-  public async createUser(@Body() createUser: CreateUserDto) {
-    console.log(createUser);
-    return this.usersService.create(createUser);
-  }
-
   @Patch('/:id')
   public async updateUser(
     @Param('id', ParseIntPipe) id: number,

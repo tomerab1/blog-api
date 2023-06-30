@@ -3,10 +3,11 @@ import { EmailService } from './email.service';
 import { ConfigService } from '@nestjs/config';
 import { UserModule } from 'src/user/user.module';
 import { SMTP_TOKEN } from './constants';
+import { EmailController } from './email.controller';
 import SmtpNodemailer from './clients/smtp-nodemailer.class';
 
 @Module({
-  controllers: [],
+  controllers: [EmailController],
   providers: [
     EmailService,
     ConfigService,
@@ -20,5 +21,6 @@ import SmtpNodemailer from './clients/smtp-nodemailer.class';
     },
   ],
   imports: [UserModule],
+  exports: [EmailService],
 })
 export class EmailModule {}

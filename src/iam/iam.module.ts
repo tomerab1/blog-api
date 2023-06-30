@@ -10,12 +10,15 @@ import { UserModule } from 'src/user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthenticationGuard } from './auth/guards/authentication.guard';
 import { AccessTokenGuard } from './auth/guards/accessToken.guard';
+import { EmailModule } from 'src/email/email.module';
+import EmailVerificationGuard from './auth/guards/verify-email.guard';
 
 @Module({
   imports: [
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
     UserModule,
+    EmailModule,
   ],
   providers: [
     {
@@ -27,6 +30,7 @@ import { AccessTokenGuard } from './auth/guards/accessToken.guard';
       useClass: AuthenticationGuard,
     },
     AccessTokenGuard,
+    EmailVerificationGuard,
     AuthService,
   ],
   exports: [HashingService],

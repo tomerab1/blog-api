@@ -8,6 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { AccessTokenGuard } from './accessToken.guard';
 import { AuthType } from '../enums/auth-type.enum';
 import { AUTH_TYPE_KEY } from '../decorators/auth.decorator';
+import EmailVerificationGuard from './verify-email.guard';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
@@ -16,13 +17,14 @@ export class AuthenticationGuard implements CanActivate {
     AuthType,
     CanActivate | CanActivate[]
   > = {
-    [AuthType.Bearer]: this.accessTokenGuard,
+    [AuthType.Bearer]: [this.accessTokenGuard, this.emailVerificationGuard],
     [AuthType.None]: { canActivate: () => true },
   };
 
   constructor(
     private readonly reflector: Reflector,
     private readonly accessTokenGuard: AccessTokenGuard,
+    private readonly emailVerificationGuard: EmailVerificationGuard,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -32,6 +34,7 @@ export class AuthenticationGuard implements CanActivate {
     ) ?? [AuthenticationGuard.defaultAuthType];
     const guards = authTypes.map((type) => this.authTypeGuardMap[type]).flat();
     let error = new UnauthorizedException();
+    const canActivateArr: boolean[] = [];
 
     for (const instance of guards) {
       const canActivate = await Promise.resolve(
@@ -40,8 +43,11 @@ export class AuthenticationGuard implements CanActivate {
         error = err;
       });
 
-      if (canActivate) return true;
+      if (canActivate) canActivateArr.push(true);
+      else canActivateArr.push(false);
     }
+
+    if (canActivateArr.every((val) => val === true)) return true;
 
     throw error;
   }

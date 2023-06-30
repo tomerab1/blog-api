@@ -30,7 +30,15 @@ export class UserService {
   }
 
   public async findOneEmail(email: string) {
-    const user = await this.usersRepository.findOneBy({ email });
+    const user = await this.usersRepository.findOne({ where: { email } });
+    if (!user) throw new NotFoundException();
+    return user;
+  }
+
+  public async findOneUuid(emailVerificationUuid: string) {
+    const user = await this.usersRepository.findOne({
+      where: { emailVerificationUuid },
+    });
     if (!user) throw new NotFoundException();
     return user;
   }

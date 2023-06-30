@@ -4,15 +4,20 @@ import SignInDto from './dtos/signIn.dto';
 import { AuthService } from './auth.service';
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type.enum';
+import { EmailService } from 'src/email/email.service';
 
 @Auth(AuthType.None)
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly emailService: EmailService,
+  ) {}
 
   @Post('sign-up')
   async signUp(@Body() signUpData: CreateUserDto) {
-    return this.authService.signUp(signUpData);
+    await this.authService.signUp(signUpData);
+    await this.emailService.sendEmailVerification(signUpData.email);
   }
 
   @HttpCode(HttpStatus.OK)

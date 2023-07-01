@@ -8,6 +8,7 @@ import { IamModule } from './iam/iam.module';
 import { PostModule } from './post/post.module';
 import { EmailModule } from './email/email.module';
 import { TagModule } from './tag/tag.module';
+import { LoggerService } from './logger/logger.service';
 import * as Joi from 'joi';
 
 @Module({
@@ -41,6 +42,6 @@ import * as Joi from 'joi';
     TagModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [LoggerService],
 })
 export class AppModule {}

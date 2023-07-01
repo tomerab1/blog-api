@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { ImageModule } from './image/image.module';
 import { DatabaseModule } from './database/database.module';
-import { CommentaryModule } from './commentary/commentary.module';
+import { CommentModule } from './comment/comment.module';
 import { ConfigModule } from '@nestjs/config';
 import { IamModule } from './iam/iam.module';
 import { PostModule } from './post/post.module';
@@ -15,7 +15,7 @@ import * as Joi from 'joi';
     UserModule,
     ImageModule,
     DatabaseModule,
-    CommentaryModule,
+    CommentModule,
     IamModule,
     PostModule,
     ConfigModule.forRoot({

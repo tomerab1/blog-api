@@ -33,6 +33,7 @@ import * as Joi from 'joi';
         AWS_BUCKET_NAME: Joi.string().required(),
         AWS_ACCESS_KEY_ID: Joi.string().required(),
         AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+        API_ENDPOINT: Joi.string().required(),
         PORT: Joi.number(),
       }),
     }),

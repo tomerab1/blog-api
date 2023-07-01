@@ -35,7 +35,10 @@ export default class Post {
   @OneToMany(() => Comment, (comments: Comment) => comments.post)
   public readonly comments: Comment[];
 
-  @ManyToMany(() => Tag, (tag: Tag) => tag.posts)
+  @ManyToMany(() => Tag, (tag: Tag) => tag.posts, {
+    cascade: true,
+    eager: true,
+  })
   @JoinTable()
   public readonly tags: Tag[];
 }

@@ -26,7 +26,7 @@ export class PostService {
   async findOne(id: number) {
     const post = await this.postRepository.findOne({
       where: { id },
-      relations: { images: true },
+      relations: { images: true, tags: true },
     });
 
     if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);

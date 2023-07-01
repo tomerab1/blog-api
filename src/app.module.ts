@@ -9,6 +9,7 @@ import { PostModule } from './post/post.module';
 import { EmailModule } from './email/email.module';
 import { TagModule } from './tag/tag.module';
 import { LoggerService } from './logger/logger.service';
+import { HealthModule } from './health/health.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -40,6 +41,7 @@ import * as Joi from 'joi';
     }),
     EmailModule,
     TagModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [LoggerService],

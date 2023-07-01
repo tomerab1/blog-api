@@ -1,9 +1,12 @@
 import Comment from 'src/comment/entities/comment.entity';
 import Image from 'src/image/entities/image.entity';
+import { Tag } from 'src/tag/entities/tag.entity';
 import User from 'src/user/entities/user.entity';
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -31,4 +34,8 @@ export default class Post {
 
   @OneToMany(() => Comment, (comments: Comment) => comments.post)
   public readonly comments: Comment[];
+
+  @ManyToMany(() => Tag, (tag: Tag) => tag.posts)
+  @JoinTable()
+  public readonly tags: Tag[];
 }

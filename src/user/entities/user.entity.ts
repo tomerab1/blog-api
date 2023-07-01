@@ -5,9 +5,7 @@ import {
   Column,
   Entity,
   Generated,
-  JoinColumn,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -28,10 +26,6 @@ export default class User {
 
   @Column({ default: false })
   public readonly isEmailVerified: boolean;
-
-  @Column()
-  @Generated('uuid')
-  public readonly emailVerificationUuid;
 
   @Column()
   @Exclude()

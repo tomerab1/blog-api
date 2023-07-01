@@ -35,14 +35,6 @@ export class UserService {
     return user;
   }
 
-  public async findOneUuid(emailVerificationUuid: string) {
-    const user = await this.usersRepository.findOne({
-      where: { emailVerificationUuid },
-    });
-    if (!user) throw new NotFoundException();
-    return user;
-  }
-
   public async create(userData: CreateUserDto) {
     const newUser = await this.usersRepository.create(userData);
     await this.usersRepository.save(newUser);

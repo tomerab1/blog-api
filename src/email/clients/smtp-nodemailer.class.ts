@@ -11,7 +11,6 @@ export default class SmtpNodemailer extends SmtpBase {
 
     this.transport = createTransport({
       service: configService.get('NODEMAILER_SERVICE'),
-
       auth: {
         user: configService.get('NODEMAILER_USER'),
         pass: configService.get('NODEMAILER_PASS'),

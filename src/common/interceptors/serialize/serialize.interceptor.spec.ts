@@ -1,7 +1,7 @@
-import { SerializeInterceptorInterceptor } from './serialize.interceptor';
+import { SerializeInterceptor } from './serialize.interceptor';
 
-describe('SerializeInterceptorInterceptor', () => {
+describe('SerializeInterceptor', () => {
   it('should be defined', () => {
-    expect(new SerializeInterceptorInterceptor()).toBeDefined();
+    expect(new SerializeInterceptor()).toBeDefined();
   });
 });

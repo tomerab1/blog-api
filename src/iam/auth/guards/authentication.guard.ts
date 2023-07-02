@@ -34,7 +34,6 @@ export class AuthenticationGuard implements CanActivate {
     ) ?? [AuthenticationGuard.defaultAuthType];
     const guards = authTypes.map((type) => this.authTypeGuardMap[type]).flat();
     let error = new UnauthorizedException();
-    const canActivateArr: boolean[] = [];
 
     for (const instance of guards) {
       const canActivate = await Promise.resolve(
@@ -43,12 +42,9 @@ export class AuthenticationGuard implements CanActivate {
         error = err;
       });
 
-      if (canActivate) canActivateArr.push(true);
-      else canActivateArr.push(false);
+      if (!canActivate) throw error;
     }
 
-    if (canActivateArr.every((val) => val === true)) return true;
-
-    throw error;
+    return true;
   }
 }

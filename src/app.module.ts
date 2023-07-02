@@ -11,6 +11,7 @@ import { TagModule } from './tag/tag.module';
 import { LoggerService } from './logger/logger.service';
 import { HealthModule } from './health/health.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
+import { LoggerModule } from './logger/logger.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -44,6 +45,7 @@ import * as Joi from 'joi';
     TagModule,
     HealthModule,
     SubscribeModule,
+    LoggerModule,
   ],
   controllers: [],
   providers: [LoggerService],

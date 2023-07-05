@@ -21,4 +21,20 @@ export class LoggerService {
       ],
     });
   }
+  
+  debug(message: string) {
+    this.logger.debug(message);
+  }
+  
+  info(message: string) {
+    this.logger.info(message);
+  }
+
+  error(message: string) {
+    this.logger.error(message);
+  }
+
+  warn(message: string) {
+    this.logger.warn(message);
+  }
 }

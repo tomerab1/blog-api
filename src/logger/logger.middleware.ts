@@ -1,10 +1,36 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { LoggerService } from './logger.service';
+import { Request, Response, NextFunction } from 'express';
+import { ERROR_RANGE, INFO_RANGE, WARN_RANGE } from './constatns';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  consturctor() {}
+  private readonly loggerMap: Record<number, typeof this.logger.info> = {
+    [INFO_RANGE]: this.logger.info,
+    [WARN_RANGE]: this.logger.warn,
+    [ERROR_RANGE]: this.logger.error,
+  };
 
-  use(req: any, res: any, next: () => void) {
-    next();
+  constructor(private readonly logger: LoggerService) {}
+
+  use(req: Request, res: Response, next: NextFunction) {
+    const normalizedRequestStatus = this.normalize(req.statusCode);
+    const normalizedResponseStatus = this.normalize(res.statusCode);
+
+    this.loggerMap[normalizedRequestStatus](
+      `${req.statusCode} - ${req.statusMessage} - ${req.originalUrl} - ${req.method}`,
+    );
+
+    this.loggerMap[normalizedResponseStatus](
+      `${res.statusCode} - ${res.statusMessage}`,
+    );
+
+    req.next();
+  }
+
+  private normalize(status: number): number {
+    if (INFO_RANGE <= status && status < WARN_RANGE) return INFO_RANGE;
+    else if (WARN_RANGE <= status && status < ERROR_RANGE) return WARN_RANGE;
+    return ERROR_RANGE;
   }
 }

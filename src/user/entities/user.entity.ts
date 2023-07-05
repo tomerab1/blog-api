@@ -1,12 +1,13 @@
 import { Exclude, Expose } from 'class-transformer';
 import Image from 'src/image/entities/image.entity';
 import Post from 'src/post/entities/post.entity';
+import { Subscribe } from 'src/subscribe/entities/subscribe.entity';
 import {
   Column,
   Entity,
-  JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -25,6 +26,9 @@ export default class User {
   @Column({ unique: true })
   public readonly email: string;
 
+  @Column({ default: false })
+  public readonly isEmailVerified: boolean;
+
   @Column()
   @Exclude()
   public readonly password: string;
@@ -37,4 +41,8 @@ export default class User {
 
   @OneToMany(() => Image, (image: Image) => image.owner, { cascade: true })
   public readonly images: Image[];
+
+  @ManyToMany(() => Subscribe, (sub: Subscribe) => sub.subscriptions)
+  @JoinTable()
+  public readonly subscribers: Subscribe[];
 }

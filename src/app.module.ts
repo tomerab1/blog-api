@@ -2,10 +2,16 @@ import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { ImageModule } from './image/image.module';
 import { DatabaseModule } from './database/database.module';
-import { CommentaryModule } from './commentary/commentary.module';
+import { CommentModule } from './comment/comment.module';
 import { ConfigModule } from '@nestjs/config';
 import { IamModule } from './iam/iam.module';
 import { PostModule } from './post/post.module';
+import { EmailModule } from './email/email.module';
+import { TagModule } from './tag/tag.module';
+import { LoggerService } from './logger/logger.service';
+import { HealthModule } from './health/health.module';
+import { SubscribeModule } from './subscribe/subscribe.module';
+import { LoggerModule } from './logger/logger.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -13,7 +19,7 @@ import * as Joi from 'joi';
     UserModule,
     ImageModule,
     DatabaseModule,
-    CommentaryModule,
+    CommentModule,
     IamModule,
     PostModule,
     ConfigModule.forRoot({
@@ -31,11 +37,17 @@ import * as Joi from 'joi';
         AWS_BUCKET_NAME: Joi.string().required(),
         AWS_ACCESS_KEY_ID: Joi.string().required(),
         AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+        API_ENDPOINT: Joi.string().required(),
         PORT: Joi.number(),
       }),
     }),
+    EmailModule,
+    TagModule,
+    HealthModule,
+    SubscribeModule,
+    LoggerModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [LoggerService],
 })
 export class AppModule {}

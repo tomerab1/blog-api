@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SerializeInterceptor } from './common/interceptors/serialize/serialize.interceptor';
 import User from './user/entities/user.entity';
+import { TimeoutInterceptor } from './common/interceptors/timeout/timeout.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,7 +18,10 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalInterceptors(new SerializeInterceptor(User));
+  app.useGlobalInterceptors(
+    new SerializeInterceptor(User),
+    new TimeoutInterceptor(),
+  );
   await app.listen(3000);
 }
 bootstrap();

@@ -26,7 +26,7 @@ export class PostService {
   async findOne(id: number) {
     const post = await this.postRepository.findOne({
       where: { id },
-      relations: { images: true },
+      relations: { images: true, tags: true },
     });
 
     if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);
@@ -39,8 +39,7 @@ export class PostService {
       ...createPostDto,
       user,
     });
-    await this.postRepository.save(post);
-    return post;
+    return await this.postRepository.save(post);
   }
 
   async update(request: Request, id: number, updatePostDto: UpdatePostDto) {

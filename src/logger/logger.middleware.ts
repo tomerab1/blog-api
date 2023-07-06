@@ -18,7 +18,7 @@ export class LoggerMiddleware implements NestMiddleware {
       const { method, originalUrl } = req;
       const { statusCode, statusMessage } = res;
       const normalizedResponseStatus = this.normalize(statusCode);
-      const message = `${method} ${originalUrl} ${statusCode} ${statusMessage}`;
+      const message = `${method} ${originalUrl} ${statusCode} ${statusMessage} ${req.socket.remoteAddress}`;
 
       this.loggerMap[INFO_RANGE](message);
       this.loggerMap[normalizedResponseStatus](message);

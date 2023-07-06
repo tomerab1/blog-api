@@ -21,7 +21,7 @@ export class LoggerService {
         new winston.transports.DailyRotateFile({
           dirname: 'logs',
           filename: createPath(__dirname, '%DATE%-combined.log'),
-          level: 'warn',
+          level: 'info',
           zippedArchive: true,
         }),
       ],

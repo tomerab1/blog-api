@@ -14,15 +14,17 @@ export class LoggerMiddleware implements NestMiddleware {
   constructor(private readonly logger: LoggerService) {}
 
   use(req: Request, res: Response, next: NextFunction) {
-    const normalizedResponseStatus = this.normalize(res.statusCode);
+    res.on('finish', () => {
+      const normalizedResponseStatus = this.normalize(res.statusCode);
 
-    this.loggerMap[INFO_RANGE](
-      `Request - OriginalUrl=${req.originalUrl} - ReqMehod=${req.method}`,
-    );
+      this.loggerMap[INFO_RANGE](
+        `Request - OriginalUrl=${req.originalUrl} - ReqMehod=${req.method}`,
+      );
 
-    this.loggerMap[normalizedResponseStatus](
-      `Response - StatusCode=${res.statusCode} - StatusMessage=${res.statusMessage}`,
-    );
+      this.loggerMap[normalizedResponseStatus](
+        `Response - StatusCode=${res.statusCode} - StatusMessage=${res.statusMessage}`,
+      );
+    });
 
     next();
   }

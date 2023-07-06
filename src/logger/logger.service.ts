@@ -1,40 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { createPath } from 'src/common/create-path.helper';
-import winston, { Logger, createLogger } from 'winston';
-import DailyRotateFile from 'winston-daily-rotate-file';
+import * as winston from 'winston';
+import 'winston-daily-rotate-file';
 
 @Injectable()
 export class LoggerService {
-  constructor(private readonly logger: Logger) {
-    this.logger = createLogger({
-      level: 'info',
+  private readonly logger: winston.Logger;
+
+  constructor() {
+    this.logger = winston.createLogger({
       format: winston.format.json(),
-      defaultMeta: { service: 'user-service' },
+      level: 'info',
       transports: [
-        new DailyRotateFile({
-          filename: createPath(__dirname, 'logs', 'error.log'),
+        new winston.transports.DailyRotateFile({
+          dirname: 'logs',
+          filename: createPath(__dirname, '%DATE%-error.log'),
           level: 'error',
+          zippedArchive: true,
         }),
-        new DailyRotateFile({
-          filename: createPath(__dirname, 'logs', 'combined.log'),
+        new winston.transports.DailyRotateFile({
+          dirname: 'logs',
+          filename: createPath(__dirname, '%DATE%-combined.log'),
+          level: 'warn',
+          zippedArchive: true,
         }),
       ],
     });
   }
-  
-  debug(message: string) {
+
+  debug = (message: string) => {
     this.logger.debug(message);
-  }
-  
-  info(message: string) {
+  };
+
+  info = (message: string) => {
     this.logger.info(message);
-  }
+  };
 
-  error(message: string) {
+  error = (message: string) => {
     this.logger.error(message);
-  }
+  };
 
-  warn(message: string) {
+  warn = (message: string) => {
     this.logger.warn(message);
-  }
+  };
 }

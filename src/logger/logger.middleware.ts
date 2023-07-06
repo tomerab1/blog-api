@@ -15,15 +15,13 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     res.on('finish', () => {
-      const normalizedResponseStatus = this.normalize(res.statusCode);
+      const { method, originalUrl } = req;
+      const { statusCode, statusMessage } = res;
+      const normalizedResponseStatus = this.normalize(statusCode);
+      const message = `${method} ${originalUrl} ${statusCode} ${statusMessage}`;
 
-      this.loggerMap[INFO_RANGE](
-        `Request - OriginalUrl=${req.originalUrl} - ReqMehod=${req.method}`,
-      );
-
-      this.loggerMap[normalizedResponseStatus](
-        `Response - StatusCode=${res.statusCode} - StatusMessage=${res.statusMessage}`,
-      );
+      this.loggerMap[INFO_RANGE](message);
+      this.loggerMap[normalizedResponseStatus](message);
     });
 
     next();

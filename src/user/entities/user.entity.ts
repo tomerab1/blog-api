@@ -2,14 +2,7 @@ import { Exclude, Expose } from 'class-transformer';
 import Image from 'src/image/entities/image.entity';
 import Post from 'src/post/entities/post.entity';
 import { Subscribe } from 'src/subscribe/entities/subscribe.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @Expose()
@@ -42,7 +35,6 @@ export default class User {
   @OneToMany(() => Image, (image: Image) => image.owner, { cascade: true })
   public readonly images: Image[];
 
-  @ManyToMany(() => Subscribe, (sub: Subscribe) => sub.subscriptions)
-  @JoinTable()
+  @OneToMany(() => Subscribe, (sub: Subscribe) => sub.owner)
   public readonly subscribers: Subscribe[];
 }

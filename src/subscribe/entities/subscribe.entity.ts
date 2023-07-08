@@ -1,11 +1,17 @@
 import User from 'src/user/entities/user.entity';
-import { Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Subscribe {
   @PrimaryGeneratedColumn()
   public readonly id: number;
 
-  @ManyToMany(() => User, (user: User) => user.subscribers)
-  public readonly subscriptions: User[];
+  @Column({ unique: true })
+  public readonly email: string;
+
+  @Column({ default: false })
+  public readonly paid: boolean;
+
+  @ManyToOne(() => User, (user: User) => user.subscribers, { cascade: true })
+  public readonly owner: User;
 }

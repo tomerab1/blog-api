@@ -8,10 +8,10 @@ import { IamModule } from './iam/iam.module';
 import { PostModule } from './post/post.module';
 import { EmailModule } from './email/email.module';
 import { TagModule } from './tag/tag.module';
-import { LoggerService } from './logger/logger.service';
 import { HealthModule } from './health/health.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { LoggerModule } from './logger/logger.module';
+import { SearchModule } from './search/search.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -46,8 +46,9 @@ import * as Joi from 'joi';
     HealthModule,
     SubscribeModule,
     LoggerModule,
+    SearchModule,
   ],
   controllers: [],
-  providers: [LoggerService],
+  providers: [],
 })
 export class AppModule {}

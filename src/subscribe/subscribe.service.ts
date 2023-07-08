@@ -11,6 +11,8 @@ import { Repository } from 'typeorm';
 import { UserService } from 'src/user/user.service';
 import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 import PostgresErrorCode from 'src/database/postgresErrorCodes.enum';
+import { Request } from 'express';
+import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 
 @Injectable()
 export class SubscribeService {
@@ -20,18 +22,22 @@ export class SubscribeService {
     private readonly userService: UserService,
   ) {}
 
-  async create(createSubscribeDto: CreateSubscribeDto) {
+  async create(request: Request, createSubscribeDto: CreateSubscribeDto) {
+    const { sub } = request[REQUEST_USER_KEY];
     const user = await this.userService.findOneEmail(createSubscribeDto.email);
+    const currentUser = await this.userService.findOne(sub);
+
     try {
       const subscribe = await this.subscribeRepository.create({
-        email: user.email,
-        owner: user,
+        paid: createSubscribeDto.paid,
+        subscribedTo: user,
+        subscriber: currentUser,
       });
       return await this.subscribeRepository.save(subscribe);
     } catch (error) {
       if (error.code === PostgresErrorCode.UniqueViolation)
         throw new ConflictException(
-          `Already subscribed to user with email=${createSubscribeDto.email}`,
+          `Already subscribed to user with email=${user.email}`,
         );
 
       throw error;
@@ -42,14 +48,14 @@ export class SubscribeService {
     return await this.subscribeRepository.find({
       skip: offset,
       take: limit,
-      relations: { owner: true },
+      relations: { subscribedTo: true },
     });
   }
 
   async findOne(id: number) {
     const subscribe = await this.subscribeRepository.findOne({
       where: { id },
-      relations: { owner: true },
+      relations: { subscribedTo: true },
     });
 
     if (!subscribe)

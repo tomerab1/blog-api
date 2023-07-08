@@ -12,6 +12,8 @@ import { HealthModule } from './health/health.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { LoggerModule } from './logger/logger.module';
 import { SearchModule } from './search/search.module';
+import { SchedulerModule } from './scheduler/scheduler.module';
+import { PaymentsModule } from './payments/payments.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -47,6 +49,8 @@ import * as Joi from 'joi';
     SubscribeModule,
     LoggerModule,
     SearchModule,
+    SchedulerModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [],

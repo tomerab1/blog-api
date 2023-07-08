@@ -35,6 +35,11 @@ export default class User {
   @OneToMany(() => Image, (image: Image) => image.owner, { cascade: true })
   public readonly images: Image[];
 
-  @OneToMany(() => Subscribe, (sub: Subscribe) => sub.owner)
+  // people the user subscribes to.
+  @OneToMany(() => Subscribe, (sub: Subscribe) => sub.subscriber)
+  public readonly subscriptions: Subscribe[];
+
+  // people subscribed to the user.
+  @OneToMany(() => Subscribe, (sub: Subscribe) => sub.subscribedTo)
   public readonly subscribers: Subscribe[];
 }

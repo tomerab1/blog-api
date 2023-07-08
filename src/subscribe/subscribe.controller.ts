@@ -7,19 +7,24 @@ import {
   Param,
   Delete,
   Query,
+  Req,
 } from '@nestjs/common';
 import { SubscribeService } from './subscribe.service';
 import { CreateSubscribeDto } from './dto/create-subscribe.dto';
 import { UpdateSubscribeDto } from './dto/update-subscribe.dto';
 import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import { Request } from 'express';
 
 @Controller('subscribe')
 export class SubscribeController {
   constructor(private readonly subscribeService: SubscribeService) {}
 
   @Post()
-  create(@Body() createSubscribeDto: CreateSubscribeDto) {
-    return this.subscribeService.create(createSubscribeDto);
+  create(
+    @Req() request: Request,
+    @Body() createSubscribeDto: CreateSubscribeDto,
+  ) {
+    return this.subscribeService.create(request, createSubscribeDto);
   }
 
   @Get()

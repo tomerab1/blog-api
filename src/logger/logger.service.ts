@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { createPath } from 'src/common/create-path.helper';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
+import { getTransportOptions } from './getTransportOptions';
 
 @Injectable()
 export class LoggerService {
@@ -12,18 +12,8 @@ export class LoggerService {
       format: winston.format.json(),
       level: 'info',
       transports: [
-        new winston.transports.DailyRotateFile({
-          dirname: 'logs',
-          filename: createPath(__dirname, '%DATE%-error.log'),
-          level: 'error',
-          zippedArchive: true,
-        }),
-        new winston.transports.DailyRotateFile({
-          dirname: 'logs',
-          filename: createPath(__dirname, '%DATE%-combined.log'),
-          level: 'info',
-          zippedArchive: true,
-        }),
+        getTransportOptions('error', '%DATE%-error.log'),
+        getTransportOptions('info', '%DATE%-combined.log'),
       ],
     });
   }

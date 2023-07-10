@@ -21,7 +21,7 @@ export class EmailService {
   async sendEmailVerification(recipient: string): Promise<void> {
     const user = await this.userService.findOneEmail(recipient);
     const token = await this.generateEmailConfirmationToken(user);
-    const link = `${process.env.API_ENDPOINT}/email/verify?id=${token}`;
+    const link = `${process.env.BASE_URL}/email/verify?id=${token}`;
     this.transporter.sendEmailVerification(recipient, link);
   }
 

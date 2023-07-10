@@ -4,6 +4,6 @@ import { SchedulerController } from './scheduler.controller';
 
 @Module({
   controllers: [SchedulerController],
-  providers: [SchedulerService]
+  providers: [SchedulerService],
 })
 export class SchedulerModule {}

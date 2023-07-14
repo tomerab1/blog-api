@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { ElasticsearchService } from '@nestjs/elasticsearch';
 
 @Injectable()
 export default abstract class SearchBase<T> {
   // Index/databse.
   protected index: string;
 
-  constructor(protected readonly elasticService: ElasticsearchService) {}
-
   setIndex(index: string) {
     this.index = index;
   }
 
-  abstract indexEntity(entity: T);
-  abstract query(search: string);
+  abstract createIndex(entity: T);
+  abstract updateIndex(id: string, entity: T);
+  abstract searchDocument(text: string);
+  abstract deleteDocument(id: string);
 }

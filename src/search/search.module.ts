@@ -1,7 +1,8 @@
 import { Logger, Module } from '@nestjs/common';
-import { SearchService } from './search.service';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import SearchServicePost from './services/search-post.service';
+import SearchServiceBase from './services/search-base.service';
 
 @Module({
   imports: [
@@ -10,17 +11,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) => {
         Logger.debug('[!] Initializing Elasticsearch...');
         return {
-          node: configService.get('ELASTICSEARCH_URL'),
+          cloud: {
+            id: configService.get('ELASTICSEARCH_CLOUD_ID'),
+          },
           auth: {
-            username: configService.get('ELASTICSEARCH_USR_NAME'),
-            password: configService.get('ELASTICSEARCH_PASSWORD'),
+            apiKey: configService.get('ELASTICSEARCH_API_KEY'),
           },
         };
       },
       inject: [ConfigService],
     }),
   ],
-  providers: [SearchService],
-  exports: [ElasticsearchModule],
+  providers: [SearchServicePost, SearchServiceBase],
+  exports: [ElasticsearchModule, SearchServicePost],
 })
 export class SearchModule {}

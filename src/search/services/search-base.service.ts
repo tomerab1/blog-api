@@ -14,7 +14,7 @@ export default class SearchServiceBase {
     this.index = index;
   }
 
-  async createIndex(body: SearchBody) {
+  async indexEntity(body: SearchBody) {
     try {
       return this.elasticService.index({
         index: this.index,

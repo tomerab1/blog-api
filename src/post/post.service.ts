@@ -8,11 +8,13 @@ import UpdatePostDto from './dtos/update-post.dto';
 import { UserService } from 'src/user/user.service';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 import { Request } from 'express';
+import SearchServicePost from 'src/search/services/search-post.service';
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectRepository(Post) private readonly postRepository: Repository<Post>,
+    private readonly postSearchService: SearchServicePost,
     private readonly userSerivce: UserService,
   ) {}
 
@@ -39,6 +41,7 @@ export class PostService {
       ...createPostDto,
       user,
     });
+    await this.postSearchService.indexPost(post);
     return await this.postRepository.save(post);
   }
 

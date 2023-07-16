@@ -21,8 +21,8 @@ export default class SearchServicePost {
     };
   }
 
-  async createIndex(entity: Post) {
-    return await this.searchService.createIndex(this.createSearchBody(entity));
+  async indexPost(entity: Post) {
+    return await this.searchService.indexEntity(this.createSearchBody(entity));
   }
 
   async updateIndex(id: string, newEntity: Post) {

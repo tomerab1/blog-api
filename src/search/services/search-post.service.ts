@@ -33,7 +33,7 @@ export default class SearchServicePost {
   }
 
   async deleteDocument(id: string) {
-    return await this.deleteDocument(id);
+    return await this.searchService.deleteDocument(id);
   }
 
   async searchDocument(text: string) {

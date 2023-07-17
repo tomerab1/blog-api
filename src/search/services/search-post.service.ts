@@ -3,9 +3,10 @@ import SearchServiceBase from './search-base.service';
 import { Injectable } from '@nestjs/common';
 import { FILEDS_TO_MATCH_POST, POST_INDEX } from '../constants';
 import SearchQuery from '../interfaces/search-query.interface';
+import ISearchService from '../interfaces/search-service.interface';
 
 @Injectable()
-export default class SearchServicePost {
+export default class SearchPostService implements ISearchService<Post> {
   constructor(private readonly searchService: SearchServiceBase) {
     searchService.setIndex(POST_INDEX);
   }
@@ -21,7 +22,7 @@ export default class SearchServicePost {
     };
   }
 
-  async indexPost(entity: Post) {
+  async indexEntity(entity: Post) {
     return await this.searchService.indexEntity(this.createSearchBody(entity));
   }
 

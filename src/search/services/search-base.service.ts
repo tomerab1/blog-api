@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import SearchQuery from '../interfaces/search-query.interface';
 import SearchBody from '../interfaces/search-body.interface';
+import ISearchService from '../interfaces/search-service.interface';
 
 @Injectable()
 export default class SearchServiceBase {

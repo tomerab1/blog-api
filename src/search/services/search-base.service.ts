@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import SearchQuery from '../interfaces/search-query.interface';
-import SearchBody from '../interfaces/search-body.interface';
-import ISearchService from '../interfaces/search-service.interface';
 
 @Injectable()
-export default class SearchServiceBase {
+export default class SearchServiceBase<T> {
   // Index/databse.
   protected index: string;
 
@@ -15,25 +13,40 @@ export default class SearchServiceBase {
     this.index = index;
   }
 
-  async indexEntity(body: SearchBody) {
+  async indexEntity(id: string, entity: T) {
     try {
       return this.elasticService.index({
         index: this.index,
+        id: id,
         refresh: true,
-        body: body.body,
+        body: entity,
       });
     } catch (error) {
       throw error;
     }
   }
 
-  async updateIndex(id: string, body: SearchBody) {
+  async updateEntity(id: string, newEntity: T) {
     try {
-      return await this.elasticService.update({
+      const script = Object.entries(newEntity).reduce(
+        (result, [key, value]) => {
+          return `${result} ctx._source.${key}='${value}';`;
+        },
+        '',
+      );
+
+      return await this.elasticService.updateByQuery({
         index: this.index,
-        refresh: true,
-        id: id,
-        body: body.body,
+        body: {
+          query: {
+            match: {
+              id: id,
+            },
+          },
+          script: {
+            inline: script,
+          },
+        },
       });
     } catch (error) {
       throw error;
@@ -44,7 +57,7 @@ export default class SearchServiceBase {
     try {
       return await this.elasticService.search({
         index: this.index,
-        body: query.body,
+        body: query,
       });
     } catch (error) {
       throw error;

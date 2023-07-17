@@ -2,34 +2,23 @@ import Post from 'src/post/entities/post.entity';
 import SearchServiceBase from './search-base.service';
 import { Injectable } from '@nestjs/common';
 import { FILEDS_TO_MATCH_POST, POST_INDEX } from '../constants';
-import SearchQuery from '../interfaces/search-query.interface';
 import ISearchService from '../interfaces/search-service.interface';
+import SearchQuery from '../interfaces/search-query.interface';
 
 @Injectable()
 export default class SearchPostService implements ISearchService<Post> {
-  constructor(private readonly searchService: SearchServiceBase) {
+  constructor(private readonly searchService: SearchServiceBase<Post>) {
     searchService.setIndex(POST_INDEX);
   }
 
-  private createSearchBody(entity: Post) {
-    return {
-      body: {
-        id: entity.id,
-        title: entity.title,
-        content: entity.content,
-        userId: entity.user.id,
-      },
-    };
+  async indexEntity(id: string, entity: Post) {
+    return await this.searchService.indexEntity(id, entity);
   }
 
-  async indexEntity(entity: Post) {
-    return await this.searchService.indexEntity(this.createSearchBody(entity));
-  }
-
-  async updateIndex(id: string, newEntity: Post) {
-    return await this.searchService.updateIndex(
-      id,
-      this.createSearchBody(newEntity),
+  async updateEntity(newEntity: Post) {
+    return await this.searchService.updateEntity(
+      newEntity.id.toString(),
+      newEntity,
     );
   }
 

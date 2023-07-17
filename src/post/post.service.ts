@@ -41,8 +41,9 @@ export class PostService {
       ...createPostDto,
       user,
     });
-    await this.postSearchService.indexEntity(post);
-    return await this.postRepository.save(post);
+    const savedPost = await this.postRepository.save(post);
+    await this.postSearchService.indexEntity(savedPost.id.toString(), post);
+    return savedPost;
   }
 
   async update(request: Request, id: number, updatePostDto: UpdatePostDto) {
@@ -54,6 +55,9 @@ export class PostService {
     });
 
     if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);
+
+    await this.postSearchService.updateEntity(post);
+
     return this.postRepository.save(post);
   }
 

@@ -6,11 +6,9 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post,
   Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import CreateUserDto from './dtos/create-user.dto';
 import UpdateUserDto from './dtos/update-user.dto';
 import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 

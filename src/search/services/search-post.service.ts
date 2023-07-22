@@ -5,21 +5,37 @@ import { FILEDS_TO_MATCH_POST, POST_INDEX } from '../constants';
 import ISearchService from '../interfaces/search-service.interface';
 import SearchQuery from '../interfaces/search-query.interface';
 
+interface SearchPostEntity {
+  usrId: number;
+  postId: number;
+  title: string;
+  content: string;
+}
+
 @Injectable()
 export default class SearchPostService implements ISearchService<Post> {
-  constructor(private readonly searchService: SearchServiceBase<Post>) {
+  constructor(
+    private readonly searchService: SearchServiceBase<SearchPostEntity>,
+  ) {
     searchService.setIndex(POST_INDEX);
   }
 
   async indexEntity(id: string, entity: Post) {
-    return await this.searchService.indexEntity(id, entity);
+    return await this.searchService.indexEntity(id, {
+      usrId: entity.user.id,
+      postId: entity.id,
+      title: entity.title,
+      content: entity.content,
+    });
   }
 
   async updateEntity(newEntity: Post) {
-    return await this.searchService.updateEntity(
-      newEntity.id.toString(),
-      newEntity,
-    );
+    return await this.searchService.updateEntity(newEntity.id.toString(), {
+      usrId: newEntity.user.id,
+      postId: newEntity.id,
+      title: newEntity.title,
+      content: newEntity.content,
+    });
   }
 
   async deleteDocument(id: string) {

@@ -26,7 +26,7 @@ export default class SearchServiceBase<T> {
     }
   }
 
-  async updateEntity(id: string, newEntity: T) {
+  async updateEntity(id: string, newEntity: Partial<T>) {
     try {
       const script = Object.entries(newEntity).reduce(
         (result, [key, value]) => {
@@ -55,10 +55,12 @@ export default class SearchServiceBase<T> {
 
   async searchDocument(query: SearchQuery) {
     try {
-      return await this.elasticService.search({
+      const { body } = await this.elasticService.search({
         index: this.index,
-        body: query,
+        body: query.body,
       });
+
+      return body.hits.hits.map((hit) => hit._source);
     } catch (error) {
       throw error;
     }
@@ -66,9 +68,15 @@ export default class SearchServiceBase<T> {
 
   async deleteDocument(id: string) {
     try {
-      return this.elasticService.delete({
+      return this.elasticService.deleteByQuery({
         index: this.index,
-        id: id,
+        body: {
+          query: {
+            match: {
+              id,
+            },
+          },
+        },
       });
     } catch (error) {
       throw error;

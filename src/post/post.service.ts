@@ -13,7 +13,8 @@ import SearchPostService from 'src/search/services/search-post.service';
 @Injectable()
 export class PostService {
   constructor(
-    @InjectRepository(Post) private readonly postRepository: Repository<Post>,
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
     private readonly postSearchService: SearchPostService,
     private readonly userSerivce: UserService,
   ) {}
@@ -57,12 +58,12 @@ export class PostService {
     if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);
 
     await this.postSearchService.updateEntity(post);
-
     return this.postRepository.save(post);
   }
 
   async delete(id: number) {
     const post = await this.findOne(id);
+    this.postSearchService.deleteDocument(id.toString());
     return this.postRepository.remove(post);
   }
 }

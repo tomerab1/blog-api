@@ -11,12 +11,21 @@ import SearchPostService from './services/search-post.service';
       useFactory: async (configService: ConfigService) => {
         Logger.debug('[!] Initializing Elasticsearch...');
         return {
-          cloud: {
-            id: configService.get('ELASTICSEARCH_CLOUD_ID'),
-          },
+          node: configService.get('ELASTICSEARCH_NODE'),
           auth: {
-            apiKey: configService.get('ELASTICSEARCH_API_KEY'),
+            username: configService.get('ELASTICSEARCH_USERNAME'),
+            password: configService.get('ELASTICSEARCH_PASSWORD'),
           },
+          // ssl: {
+          //   ca: readFileSync('./cacert.pem'),
+          //   rejectUnauthorized: false,
+          // },
+          // cloud: {
+          //   id: configService.get('ELASTICSEARCH_CLOUD_ID'),
+          // },
+          // auth: {
+          //   apiKey: configService.get('ELASTICSEARCH_API_KEY'),
+          // },
         };
       },
       inject: [ConfigService],

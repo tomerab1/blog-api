@@ -17,17 +17,22 @@ export class UserController {
   constructor(private readonly usersService: UserService) {}
 
   @Get()
-  public async getUsers(@Query() paginationDto: PaginationQueryDto) {
+  public getUsers(@Query() paginationDto: PaginationQueryDto) {
     return this.usersService.findAll(paginationDto);
   }
 
+  @Get('search')
+  public search(@Query('q') searchQuery: string) {
+    return this.usersService.searchUser(searchQuery);
+  }
+
   @Get('/:id')
-  public async getUser(@Param('id', ParseIntPipe) id: number) {
+  public getUser(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
   @Patch('/:id')
-  public async updateUser(
+  public updateUser(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: UpdateUserDto,
   ) {
@@ -35,7 +40,7 @@ export class UserController {
   }
 
   @Delete('/:id')
-  public async deleteUser(@Param('id', ParseIntPipe) id: number) {
+  public deleteUser(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.delete(id);
   }
 }

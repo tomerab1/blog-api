@@ -36,6 +36,10 @@ export class PostService {
     return post;
   }
 
+  async searchPost(text: string) {
+    return await this.postSearchService.searchDocument(text);
+  }
+
   async create(request: Request, createPostDto: CreatePostDto) {
     const user = await this.userSerivce.findOne(request[REQUEST_USER_KEY].sub);
     const post = await this.postRepository.create({

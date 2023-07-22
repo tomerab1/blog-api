@@ -5,12 +5,14 @@ import { Repository } from 'typeorm';
 import CreateUserDto from './dtos/create-user.dto';
 import UpdateUserDto from './dtos/update-user.dto';
 import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
+import SearchUserService from 'src/search/services/search-user.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly userSearchService: SearchUserService,
   ) {}
 
   public async findAll(paginationDto: PaginationQueryDto) {
@@ -35,6 +37,10 @@ export class UserService {
     return user;
   }
 
+  public async searchUser(text: string) {
+    return await this.userSearchService.searchDocument(text);
+  }
+
   public async findOneEmail(email: string) {
     const user = await this.usersRepository.findOne({ where: { email } });
     if (!user) throw new NotFoundException();
@@ -44,11 +50,13 @@ export class UserService {
   public async create(userData: CreateUserDto) {
     const newUser = await this.usersRepository.create(userData);
     await this.usersRepository.save(newUser);
+    this.userSearchService.indexEntity(newUser.id.toString(), newUser);
     return newUser;
   }
 
   public async delete(id: number) {
     const user = await this.findOne(id);
+    this.userSearchService.deleteDocument(id.toString());
     return this.usersRepository.remove(user);
   }
 
@@ -58,6 +66,7 @@ export class UserService {
       ...updateData,
     });
     if (!user) throw new NotFoundException();
+    this.userSearchService.updateEntity(user);
     return this.usersRepository.save(user);
   }
 }

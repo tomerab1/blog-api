@@ -14,14 +14,10 @@ import CreatePostDto from './dtos/create-post.dto';
 import { PostService } from './post.service';
 import { Request } from 'express';
 import UpdatePostDto from './dtos/update-post.dto';
-import SearchPostService from 'src/search/services/search-post.service';
 
 @Controller('post')
 export class PostController {
-  constructor(
-    private readonly postsService: PostService,
-    private readonly searchPostService: SearchPostService,
-  ) {}
+  constructor(private readonly postsService: PostService) {}
 
   @Get()
   find(@Query() paginationQueryDto: PaginationQueryDto) {
@@ -29,8 +25,8 @@ export class PostController {
   }
 
   @Get('search')
-  async search(@Query('search') searchQuery: string) {
-    return await this.searchPostService.searchDocument(searchQuery);
+  async search(@Query('q') searchQuery: string) {
+    return await this.postsService.searchPost(searchQuery);
   }
 
   @Get(':id')

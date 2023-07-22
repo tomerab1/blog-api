@@ -5,7 +5,7 @@ import { FILEDS_TO_MATCH_POST, POST_INDEX } from '../constants';
 import ISearchService from '../interfaces/search-service.interface';
 import SearchQuery from '../interfaces/search-query.interface';
 
-interface SearchPostEntity {
+interface ISearchPostEntity {
   usrId: number;
   postId: number;
   title: string;
@@ -15,7 +15,7 @@ interface SearchPostEntity {
 @Injectable()
 export default class SearchPostService implements ISearchService<Post> {
   constructor(
-    private readonly searchService: SearchServiceBase<SearchPostEntity>,
+    private readonly searchService: SearchServiceBase<ISearchPostEntity>,
   ) {
     searchService.setIndex(POST_INDEX);
   }

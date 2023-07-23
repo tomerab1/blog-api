@@ -23,8 +23,8 @@ import SearchUserService from './services/search-user.service';
     }),
   ],
   providers: [
-    SearchPostService,
     SearchServiceBase,
+    SearchPostService,
     SearchPostService,
     SearchUserService,
   ],

@@ -4,12 +4,14 @@ import { Injectable } from '@nestjs/common';
 import { FILEDS_TO_MATCH_POST, POST_INDEX } from '../constants';
 import ISearchService from '../interfaces/search-service.interface';
 import SearchQuery from '../interfaces/search-query.interface';
+import { Tag } from 'src/tag/entities/tag.entity';
 
 interface ISearchPostEntity {
   usrId: number;
   postId: number;
   title: string;
   content: string;
+  tags: Tag[];
 }
 
 @Injectable()
@@ -26,6 +28,7 @@ export default class SearchPostService implements ISearchService<Post> {
       postId: entity.id,
       title: entity.title,
       content: entity.content,
+      tags: entity.tags,
     });
   }
 
@@ -35,6 +38,7 @@ export default class SearchPostService implements ISearchService<Post> {
       postId: newEntity.id,
       title: newEntity.title,
       content: newEntity.content,
+      tags: newEntity.tags,
     });
   }
 

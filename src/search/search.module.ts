@@ -4,9 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import SearchServiceBase from './services/search-base.service';
 import SearchPostService from './services/search-post.service';
 import SearchUserService from './services/search-user.service';
+import { ElasticSearchHealthIndicator } from './elasticSearchHealth.indicator';
+import { TerminusModule } from '@nestjs/terminus';
 
 @Module({
   imports: [
+    TerminusModule,
     ElasticsearchModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
@@ -27,7 +30,13 @@ import SearchUserService from './services/search-user.service';
     SearchPostService,
     SearchPostService,
     SearchUserService,
+    ElasticSearchHealthIndicator,
   ],
-  exports: [ElasticsearchModule, SearchPostService, SearchUserService],
+  exports: [
+    ElasticsearchModule,
+    SearchPostService,
+    SearchUserService,
+    ElasticSearchHealthIndicator,
+  ],
 })
 export class SearchModule {}

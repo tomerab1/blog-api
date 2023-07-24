@@ -4,9 +4,9 @@ import {
   HealthCheckService,
   TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
-import { ElasticSearchHealthIndicator } from './elasticSearchHealth.indicator';
 import { Auth } from 'src/iam/auth/decorators/auth.decorator';
 import { AuthType } from 'src/iam/auth/enums/auth-type.enum';
+import { ElasticSearchHealthIndicator } from 'src/search/elasticSearchHealth.indicator';
 
 @Auth(AuthType.None)
 @Controller('health')

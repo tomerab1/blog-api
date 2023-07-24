@@ -1,42 +1,28 @@
+import { Controller, Get } from '@nestjs/common';
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { HealthService } from './health.service';
-import { CreateHealthDto } from './dto/create-health.dto';
-import { UpdateHealthDto } from './dto/update-health.dto';
+  HealthCheck,
+  HealthCheckService,
+  TypeOrmHealthIndicator,
+} from '@nestjs/terminus';
+import { ElasticSearchHealth } from './elasticSearch.health';
+import { Auth } from 'src/iam/auth/decorators/auth.decorator';
+import { AuthType } from 'src/iam/auth/enums/auth-type.enum';
 
+@Auth(AuthType.None)
 @Controller('health')
 export class HealthController {
-  constructor(private readonly healthService: HealthService) {}
-
-  @Post()
-  create(@Body() createHealthDto: CreateHealthDto) {
-    return this.healthService.create(createHealthDto);
-  }
+  constructor(
+    private readonly elasticSearchHealth: ElasticSearchHealth,
+    private readonly healthService: HealthCheckService,
+    private readonly dbHealth: TypeOrmHealthIndicator,
+  ) {}
 
   @Get()
-  findAll() {
-    return this.healthService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.healthService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHealthDto: UpdateHealthDto) {
-    return this.healthService.update(+id, updateHealthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.healthService.remove(+id);
+  @HealthCheck()
+  check() {
+    return this.healthService.check([
+      () => this.dbHealth.pingCheck('database'),
+      () => this.elasticSearchHealth.check('search'),
+    ]);
   }
 }

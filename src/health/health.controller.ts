@@ -22,7 +22,7 @@ export class HealthController {
   check() {
     return this.healthService.check([
       () => this.dbHealth.pingCheck('database'),
-      () => this.elasticSearchHealth.check('search'),
+      () => this.elasticSearchHealth.pingCheck('search'),
     ]);
   }
 }

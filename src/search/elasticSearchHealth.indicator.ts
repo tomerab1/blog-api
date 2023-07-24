@@ -8,7 +8,7 @@ export class ElasticSearchHealthIndicator extends HealthIndicator {
     super();
   }
 
-  async check(key: string) {
+  async pingCheck(key: string) {
     try {
       await this.elasticSearchService.ping();
       return this.getStatus(key, true);

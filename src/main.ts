@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { SerializeInterceptor } from './common/interceptors/serialize/serialize.interceptor';
 import User from './user/entities/user.entity';
 import { TimeoutInterceptor } from './common/interceptors/timeout/timeout.interceptor';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,6 +23,8 @@ async function bootstrap() {
     new SerializeInterceptor(User),
     new TimeoutInterceptor(),
   );
-  await app.listen(3000);
+
+  const configService = app.get(ConfigService);
+  await app.listen(configService.get<number>('PORT'));
 }
 bootstrap();

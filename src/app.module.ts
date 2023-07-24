@@ -16,6 +16,7 @@ import { SchedulerModule } from './scheduler/scheduler.module';
 import { PaymentsModule } from './payments/payments.module';
 import { ChatModule } from './chat/chat.module';
 import * as Joi from 'joi';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -33,6 +34,8 @@ import * as Joi from 'joi';
     SearchModule,
     SchedulerModule,
     PaymentsModule,
+    ChatModule,
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -48,11 +51,14 @@ import * as Joi from 'joi';
         AWS_BUCKET_NAME: Joi.string().required(),
         AWS_ACCESS_KEY_ID: Joi.string().required(),
         AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+        ELASTICSEARCH_USERNAME: Joi.string().required(),
+        ELASTICSEARCH_PASSWORD: Joi.string().required(),
+        ELASTICSEARCH_NODE: Joi.string().required(),
         BASE_URL: Joi.string().required(),
         PORT: Joi.number(),
+        DB_MAX_RETRY: Joi.number().optional(),
       }),
     }),
-    ChatModule,
   ],
   controllers: [],
   providers: [],

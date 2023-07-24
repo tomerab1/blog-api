@@ -13,6 +13,8 @@ import { PaginationQueryDto } from 'src/common/dtos/pagination-query.dto';
 import PostgresErrorCode from 'src/database/postgresErrorCodes.enum';
 import { Request } from 'express';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EVENT_SUBSCRIBED } from './constants';
 
 @Injectable()
 export class SubscribeService {
@@ -20,6 +22,7 @@ export class SubscribeService {
     @InjectRepository(Subscribe)
     private readonly subscribeRepository: Repository<Subscribe>,
     private readonly userService: UserService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async create(request: Request, createSubscribeDto: CreateSubscribeDto) {
@@ -33,6 +36,8 @@ export class SubscribeService {
         subscribedTo: user,
         subscriber: currentUser,
       });
+
+      this.eventEmitter.emit(EVENT_SUBSCRIBED, subscribe);
       return await this.subscribeRepository.save(subscribe);
     } catch (error) {
       if (error.code === PostgresErrorCode.UniqueViolation)

@@ -3,7 +3,7 @@ import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { HealthCheckError, HealthIndicator } from '@nestjs/terminus';
 
 @Injectable()
-export class ElasticSearchHealth extends HealthIndicator {
+export class ElasticSearchHealthIndicator extends HealthIndicator {
   constructor(private readonly elasticSearchService: ElasticsearchService) {
     super();
   }

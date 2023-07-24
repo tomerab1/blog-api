@@ -4,7 +4,7 @@ import {
   HealthCheckService,
   TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
-import { ElasticSearchHealth } from './elasticSearch.health';
+import { ElasticSearchHealthIndicator } from './elasticSearchHealth.indicator';
 import { Auth } from 'src/iam/auth/decorators/auth.decorator';
 import { AuthType } from 'src/iam/auth/enums/auth-type.enum';
 
@@ -12,7 +12,7 @@ import { AuthType } from 'src/iam/auth/enums/auth-type.enum';
 @Controller('health')
 export class HealthController {
   constructor(
-    private readonly elasticSearchHealth: ElasticSearchHealth,
+    private readonly elasticSearchHealth: ElasticSearchHealthIndicator,
     private readonly healthService: HealthCheckService,
     private readonly dbHealth: TypeOrmHealthIndicator,
   ) {}

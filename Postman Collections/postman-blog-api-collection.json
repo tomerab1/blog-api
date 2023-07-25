@@ -186,7 +186,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:3000/auth/sign-up"
+						"url": "http://localhost:3000/api/auth/sign-up"
 					},
 					"response": []
 				}
@@ -493,7 +493,7 @@
 	],
 	"variable": [
 		{
-			"id": "11297967-b482-472a-adcc-29574b45dab1",
+			"id": "6f1e0793-22fb-4d86-9e33-8014bfafa292",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

@@ -487,7 +487,83 @@
 		},
 		{
 			"name": "comment",
-			"item": [],
+			"item": [
+				{
+					"name": "comment",
+					"id": "bb1bab3b-1902-4094-9db9-03a5942676c4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"addTokenTo": "header"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postId\": 1,\r\n    \"content\": \"This is a comment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/comment"
+					},
+					"response": []
+				},
+				{
+					"name": "update-comment",
+					"id": "2fe266da-becd-4a8a-90c9-689a23a8a5dc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"addTokenTo": "header"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"Updated comments content\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/comment/3"
+					},
+					"response": []
+				},
+				{
+					"name": "delete-comment",
+					"id": "3ac4bf26-c1ed-475f-b88c-da449ffad2ec",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"addTokenTo": "header"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3000/api/comment/3"
+					},
+					"response": []
+				}
+			],
 			"id": "f70f951f-ed6d-4c3c-99c7-ecbcf5d65c6f"
 		},
 		{
@@ -530,7 +606,7 @@
 	],
 	"variable": [
 		{
-			"id": "a0985230-df94-4858-b250-6e4fe6eb5974",
+			"id": "bb193c56-cec7-4635-afd0-3ff7c7af4f6e",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

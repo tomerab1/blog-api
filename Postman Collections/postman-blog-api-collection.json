@@ -120,13 +120,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/user/search?q=tomer",
+							"raw": "http://localhost:3000/api/user/search?q=tomer",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
+								"api",
 								"user",
 								"search"
 							],
@@ -493,7 +494,7 @@
 	],
 	"variable": [
 		{
-			"id": "0d3b3e84-0444-4f4b-be80-5ff8e0f80bfb",
+			"id": "4d29854a-2e9e-42fd-9d1e-87e4936955b7",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

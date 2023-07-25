@@ -1,21 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
-import { subscribe } from 'diagnostics_channel';
 import {
   EVENT_SUBSCRIBED,
-  EVENT_SUBSCRIPTION_PAID,
+  EVENT_SUBSCRIPTION_CANCELED,
 } from 'src/subscribe/constants';
 import { Subscribe } from 'src/subscribe/entities/subscribe.entity';
+import Stripe from 'stripe';
 
 @Injectable()
 export class PaymentsService {
-  constructor(private readonly eventEmitter: EventEmitter2) {}
+  constructor(
+    private readonly eventEmitter: EventEmitter2,
+    private readonly stripeClient: Stripe,
+  ) {}
 
   @OnEvent(EVENT_SUBSCRIBED)
-  handleSubscription(payload: Subscribe) {
-    if (payload.paid) {
+  async handleSubscription(payload: Subscribe) {
+    if (payload.plan?.paid) {
       // Will schedule the payment with scheduler
-      this.eventEmitter.emit(EVENT_SUBSCRIPTION_PAID, subscribe);
+      const customer: Stripe.Customer =
+        await this.stripeClient.customers.create({
+          description: 'test customer',
+        });
+
+      console.log(customer);
+    }
+  }
+
+  @OnEvent(EVENT_SUBSCRIPTION_CANCELED)
+  handleCanceleSubscription(payload: Subscribe) {
+    if (payload.plan?.paid) {
     }
   }
 }

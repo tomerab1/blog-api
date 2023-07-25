@@ -14,7 +14,7 @@ import PostgresErrorCode from 'src/database/postgresErrorCodes.enum';
 import { Request } from 'express';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { EVENT_SUBSCRIBED } from './constants';
+import { EVENT_SUBSCRIBED, EVENT_SUBSCRIPTION_CANCELED } from './constants';
 
 @Injectable()
 export class SubscribeService {
@@ -30,9 +30,12 @@ export class SubscribeService {
     const user = await this.userService.findOneEmail(createSubscribeDto.email);
     const currentUser = await this.userService.findOne(sub);
 
+    if (user?.email === currentUser?.email)
+      throw new ConflictException(`User can not subscribe to himself`);
+
     try {
       const subscribe = await this.subscribeRepository.create({
-        paid: createSubscribeDto.paid,
+        plan: createSubscribeDto.plan,
         subscribedTo: user,
         subscriber: currentUser,
       });
@@ -80,6 +83,7 @@ export class SubscribeService {
 
   async remove(id: number) {
     const toDelete = await this.findOne(id);
+    this.eventEmitter.emit(EVENT_SUBSCRIPTION_CANCELED, toDelete);
     return this.subscribeRepository.remove(toDelete);
   }
 }

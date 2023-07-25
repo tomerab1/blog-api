@@ -487,7 +487,20 @@
 		},
 		{
 			"name": "comment",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "bb1bab3b-1902-4094-9db9-03a5942676c4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "f70f951f-ed6d-4c3c-99c7-ecbcf5d65c6f"
 		},
 		{
@@ -530,7 +543,7 @@
 	],
 	"variable": [
 		{
-			"id": "f2e0b4fa-88a7-4e02-add0-509107f663ed",
+			"id": "aa70a5ce-db98-4753-b508-5016089b1ec7",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

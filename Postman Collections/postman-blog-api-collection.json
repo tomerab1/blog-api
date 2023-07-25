@@ -428,7 +428,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"tomer123@gmail.com\",\r\n    \"plan\": {\r\n        \"paid\": true,\r\n        \"amount\": 20\r\n    }\r\n}",
+							"raw": "{\r\n    \"email\": \"tomer123456@gmail.com\",\r\n    \"plan\": {\r\n        \"paid\": true,\r\n        \"amount\": 20\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -493,7 +493,7 @@
 	],
 	"variable": [
 		{
-			"id": "a6b3f3d5-cbcb-4a27-9ae4-af218c75183e",
+			"id": "e135a29d-ebb7-401d-9b33-fc9577edd27f",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

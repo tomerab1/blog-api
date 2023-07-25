@@ -324,7 +324,7 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:3000/post/13"
+						"url": "http://localhost:3000/api/post/13"
 					},
 					"response": []
 				}
@@ -495,7 +495,7 @@
 	],
 	"variable": [
 		{
-			"id": "171176f2-ae1a-4259-9911-5308bdcd63c8",
+			"id": "3ec228b7-f5f0-4ff1-ba2d-fdb968b8ca65",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

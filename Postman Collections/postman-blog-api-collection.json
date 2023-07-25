@@ -478,7 +478,7 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "http://localhost:3000/subscribe/3"
+						"url": "http://localhost:3000/api/subscribe/3"
 					},
 					"response": []
 				}
@@ -498,7 +498,7 @@
 	],
 	"variable": [
 		{
-			"id": "bdcfeb58-d3b6-4a76-9c98-1b4e39e45797",
+			"id": "8005682b-ebe9-4a07-898e-423e67684cfa",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

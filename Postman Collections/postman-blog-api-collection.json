@@ -495,8 +495,15 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"addTokenTo": "header"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:3000/api/coment"
 					},
 					"response": []
 				}
@@ -543,7 +550,7 @@
 	],
 	"variable": [
 		{
-			"id": "264c1464-9e70-4ad6-b7d0-6c64e692dffe",
+			"id": "f23d713f-adbf-4aee-abf1-bca56a5836e8",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

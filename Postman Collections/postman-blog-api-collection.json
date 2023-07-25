@@ -503,6 +503,15 @@
 						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"postId\": 1,\r\n    \"content\": \"This is a comment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": "http://localhost:3000/api/coment"
 					},
 					"response": []
@@ -550,7 +559,7 @@
 	],
 	"variable": [
 		{
-			"id": "f23d713f-adbf-4aee-abf1-bca56a5836e8",
+			"id": "7862749a-51d8-4673-a340-f3efe2fa74d3",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

@@ -29,7 +29,7 @@ export class PostService {
   async findOne(id: number) {
     const post = await this.postRepository.findOne({
       where: { id },
-      relations: { images: true, tags: true },
+      relations: { images: true, tags: true, comments: true },
     });
 
     if (!post) throw new NotFoundException(`Cannot find post with id=${id}`);

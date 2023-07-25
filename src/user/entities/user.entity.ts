@@ -1,4 +1,5 @@
 import { Exclude, Expose } from 'class-transformer';
+import Comment from 'src/comment/entities/comment.entity';
 import Image from 'src/image/entities/image.entity';
 import Post from 'src/post/entities/post.entity';
 import { Subscribe } from 'src/subscribe/entities/subscribe.entity';
@@ -41,4 +42,7 @@ export default class User {
   // people subscribed to the user.
   @OneToMany(() => Subscribe, (sub: Subscribe) => sub.subscribedTo)
   public readonly subscribers: Subscribe[];
+
+  @OneToMany(() => Comment, (comment: Comment) => comment.author)
+  public readonly comments: Comment[];
 }

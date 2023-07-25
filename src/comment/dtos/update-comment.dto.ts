@@ -1,1 +1,6 @@
-export class Dtos {}
+import { IsString } from 'class-validator';
+
+export class UpdateCommentDto {
+  @IsString()
+  public readonly content: string;
+}

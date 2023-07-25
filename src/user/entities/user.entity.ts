@@ -1,9 +1,17 @@
 import { Exclude, Expose } from 'class-transformer';
+import { Chat } from 'src/chat/entities/chat.entity';
 import Comment from 'src/comment/entities/comment.entity';
 import Image from 'src/image/entities/image.entity';
 import Post from 'src/post/entities/post.entity';
 import { Subscribe } from 'src/subscribe/entities/subscribe.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 @Expose()
@@ -45,4 +53,8 @@ export default class User {
 
   @OneToMany(() => Comment, (comment: Comment) => comment.author)
   public readonly comments: Comment[];
+
+  @ManyToMany(() => Chat, (chat: Chat) => chat.users)
+  @JoinTable()
+  public readonly chats: Chat[];
 }

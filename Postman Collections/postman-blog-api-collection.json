@@ -587,7 +587,7 @@
 	],
 	"variable": [
 		{
-			"id": "7e464465-ef61-4610-8580-a3c3eb71ca2e",
+			"id": "435ea1e8-0162-4500-9e0e-e9837aa0163e",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

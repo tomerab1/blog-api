@@ -29,26 +29,33 @@ export class SubscribeService {
     const { sub } = request[REQUEST_USER_KEY];
     const user = await this.userService.findOneEmail(createSubscribeDto.email);
     const currentUser = await this.userService.findOne(sub);
+    let subscribe: Subscribe = undefined;
+    let isSuccessful = true;
 
     if (user?.email === currentUser?.email)
       throw new ConflictException(`User can not subscribe to himself`);
 
     try {
-      const subscribe = await this.subscribeRepository.create({
+      subscribe = await this.subscribeRepository.create({
         plan: createSubscribeDto.plan,
         subscribedTo: user,
         subscriber: currentUser,
       });
 
-      this.eventEmitter.emit(EVENT_SUBSCRIBED, subscribe);
       return await this.subscribeRepository.save(subscribe);
     } catch (error) {
+      isSuccessful = false;
       if (error.code === PostgresErrorCode.UniqueViolation)
         throw new ConflictException(
           `Already subscribed to user with email=${user.email}`,
         );
 
       throw error;
+    } finally {
+      // Emit event only on valid subscription
+      if (isSuccessful) {
+        this.eventEmitter.emit(EVENT_SUBSCRIBED, subscribe);
+      }
     }
   }
 

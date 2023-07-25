@@ -28,7 +28,6 @@ export default class User {
 
   @OneToMany(() => Post, (post: Post) => post.user, {
     cascade: true,
-    eager: true,
   })
   public readonly posts: Post[];
 

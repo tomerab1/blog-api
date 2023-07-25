@@ -14,7 +14,7 @@ export class PaymentsService {
     private readonly stripeClient: Stripe,
   ) {}
 
-  @OnEvent(EVENT_SUBSCRIBED)
+  @OnEvent(EVENT_SUBSCRIBED, { async: true })
   async handleSubscription(payload: Subscribe) {
     if (payload.plan?.paid) {
       // Will schedule the payment with scheduler

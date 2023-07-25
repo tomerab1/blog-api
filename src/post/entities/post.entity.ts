@@ -37,7 +37,6 @@ export default class Post {
 
   @ManyToMany(() => Tag, (tag: Tag) => tag.posts, {
     cascade: true,
-    eager: true,
   })
   @JoinTable()
   public readonly tags: Tag[];

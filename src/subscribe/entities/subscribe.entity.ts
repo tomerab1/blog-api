@@ -1,5 +1,11 @@
 import User from 'src/user/entities/user.entity';
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  Unique,
+} from 'typeorm';
 
 class SubscriptionPlan {
   public readonly paid: boolean;
@@ -8,6 +14,7 @@ class SubscriptionPlan {
 }
 
 @Entity()
+@Unique(['subscriber', 'subscribedTo'])
 export class Subscribe {
   @PrimaryGeneratedColumn()
   public readonly id: number;

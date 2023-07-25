@@ -12,6 +12,7 @@ import {
   EVENT_FIND_CHAT_ROOM_ONE,
   EVENT_RECV_MESSAGE,
 } from './chat.events';
+import { CreateMessageDto } from './dto/create-message.dto';
 
 @WebSocketGateway()
 export class ChatGateway {
@@ -33,7 +34,9 @@ export class ChatGateway {
   }
 
   @SubscribeMessage(EVENT_RECV_MESSAGE)
-  recvMessage() {}
+  recvMessage(@MessageBody() createMessageDto: CreateMessageDto) {
+    return this.chatService.addMessage(createMessageDto);
+  }
 
   @SubscribeMessage(EVENT_DELETE_CHAT_ROOM)
   remove(@MessageBody() id: number) {

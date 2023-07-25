@@ -7,7 +7,9 @@ export class Chat {
   @PrimaryGeneratedColumn()
   readonly id: number;
 
-  @OneToMany(() => ChatMessage, (message: ChatMessage) => message.chat)
+  @OneToMany(() => ChatMessage, (message: ChatMessage) => message.chat, {
+    eager: true,
+  })
   public readonly messages: ChatMessage[];
 
   @ManyToMany(() => User, (user: User) => user.chats)

@@ -31,6 +31,7 @@ export class UserService {
         images: true,
         subscribers: true,
         subscriptions: true,
+        chats: true,
       },
     });
     if (!user) throw new NotFoundException();

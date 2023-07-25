@@ -7,11 +7,12 @@ import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from 'src/user/user.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthenticationGuard } from './auth/guards/authentication.guard';
 import { AccessTokenGuard } from './auth/guards/accessToken.guard';
 import { EmailModule } from 'src/email/email.module';
 import EmailVerificationGuard from './auth/guards/verify-email.guard';
+import { AuthTokenService } from './websocket-auth/authToken.service';
 
 @Module({
   imports: [
@@ -32,8 +33,9 @@ import EmailVerificationGuard from './auth/guards/verify-email.guard';
     AccessTokenGuard,
     EmailVerificationGuard,
     AuthService,
+    AuthTokenService,
   ],
-  exports: [HashingService],
+  exports: [HashingService, AuthTokenService],
   controllers: [AuthController],
 })
 export class IamModule {}

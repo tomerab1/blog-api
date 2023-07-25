@@ -6,6 +6,10 @@ import { Repository } from 'typeorm';
 import { ChatMessage } from './entities/message.entity';
 import { UserService } from 'src/user/user.service';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { AuthTokenService } from 'src/iam/websocket-auth/authToken.service';
+import { Socket } from 'socket.io';
+import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
+import { WsException } from '@nestjs/websockets';
 
 @Injectable()
 export class ChatService {
@@ -15,11 +19,23 @@ export class ChatService {
     @InjectRepository(ChatMessage)
     private readonly chatMessagesRepository: Repository<ChatMessage>,
     private readonly userService: UserService,
+    private readonly authTokenService: AuthTokenService,
   ) {}
 
-  async createRoom(createChatDto: CreateChatDto) {
+  getAuthenticatedUser(client: Socket) {
+    return this.authTokenService.verify(client);
+  }
+
+  async createRoom(client: Socket, createChatDto: CreateChatDto) {
     try {
-      const sender = await this.userService.findOne(createChatDto.sender);
+      if (!this.getAuthenticatedUser(client))
+        throw new WsException('Unauthorized');
+
+      console.log(client);
+
+      const sender = await this.userService.findOne(
+        client[REQUEST_USER_KEY].sub,
+      );
       const recipient = await this.userService.findOne(createChatDto.recipient);
 
       const room = this.chatRepository.create({
@@ -28,19 +44,25 @@ export class ChatService {
       });
 
       const savedChat = await this.chatRepository.save(room);
-      console.log(savedChat);
       return savedChat;
     } catch (error) {
       throw error;
     }
   }
 
-  async addMessage(createMessageDto: CreateMessageDto) {
+  async addMessage(client: Socket, createMessageDto: CreateMessageDto) {
     try {
+      if (!this.getAuthenticatedUser(client))
+        throw new WsException('Unauthorized');
+
       const room = await this.chatRepository.findOne({
         where: { id: createMessageDto.room },
         relations: { messages: true },
       });
+
+      const sender = await this.userService.findOne(
+        client[REQUEST_USER_KEY].sub,
+      );
 
       const message = await this.chatMessagesRepository.create({
         content: createMessageDto.text,
@@ -58,8 +80,8 @@ export class ChatService {
     }
   }
 
-  findAllRooms() {
-    return `This action returns all chat`;
+  async findAllRooms() {
+    return await this.chatRepository.find();
   }
 
   findOneRoom(id: number) {

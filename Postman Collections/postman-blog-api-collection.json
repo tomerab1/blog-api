@@ -523,7 +523,13 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "oauth2",
+							"oauth2": {
+								"addTokenTo": "header"
+							}
+						},
+						"method": "PATCH",
 						"header": []
 					},
 					"response": []
@@ -571,7 +577,7 @@
 	],
 	"variable": [
 		{
-			"id": "6284224a-dd1a-4f40-9a6a-28dff5475219",
+			"id": "41307608-9daf-4011-a24d-11eadf0c255e",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

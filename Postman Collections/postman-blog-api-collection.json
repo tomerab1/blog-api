@@ -512,7 +512,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:3000/api/coment"
+						"url": "http://localhost:3000/api/comment"
 					},
 					"response": []
 				}
@@ -559,7 +559,7 @@
 	],
 	"variable": [
 		{
-			"id": "7862749a-51d8-4673-a340-f3efe2fa74d3",
+			"id": "73afcc97-c9b7-40f8-9b9d-cc4d6596c7d1",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

@@ -515,6 +515,18 @@
 						"url": "http://localhost:3000/api/comment"
 					},
 					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "2fe266da-becd-4a8a-90c9-689a23a8a5dc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "f70f951f-ed6d-4c3c-99c7-ecbcf5d65c6f"
@@ -559,7 +571,7 @@
 	],
 	"variable": [
 		{
-			"id": "e56f9e41-08e9-4c29-adc9-ea9e23801f31",
+			"id": "b08eddd2-8554-42d9-8c4e-c2ed84af648b",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

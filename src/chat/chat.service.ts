@@ -84,11 +84,19 @@ export class ChatService {
     return await this.chatRepository.find();
   }
 
-  findOneRoom(id: number) {
-    return `This action returns a #${id} chat`;
+  async findOneRoom(id: number) {
+    const room = await this.chatRepository.findOne({
+      where: { id },
+      relations: { messages: true },
+    });
+
+    if (!room) throw new WsException(`Room with id=${id} was not found`);
+
+    return room;
   }
 
-  removeRoom(id: number) {
-    return `This action removes a #${id} chat`;
+  async removeRoom(id: number) {
+    const room = await this.findOneRoom(id);
+    return await this.chatRepository.remove(room);
   }
 }

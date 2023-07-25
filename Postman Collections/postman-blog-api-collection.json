@@ -492,13 +492,26 @@
 		},
 		{
 			"name": "email",
-			"item": [],
+			"item": [
+				{
+					"name": "New Request",
+					"id": "f55bbcf4-c70c-463b-bbb0-5d7e3df760c8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "83fb8160-ed6c-4bd8-a4d5-e768228d57c0"
 		}
 	],
 	"variable": [
 		{
-			"id": "8005682b-ebe9-4a07-898e-423e67684cfa",
+			"id": "4fb1bb85-79d4-43d7-b61b-f44503ef752c",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

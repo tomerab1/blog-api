@@ -454,7 +454,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3000/subscribe/"
+						"url": "http://localhost:3000/api/subscribe/"
 					},
 					"response": []
 				},
@@ -493,7 +493,7 @@
 	],
 	"variable": [
 		{
-			"id": "67baa0df-9b84-4a47-b120-45faa1685bb1",
+			"id": "9d7a9369-96cc-47d8-9df7-424d2d844865",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

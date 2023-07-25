@@ -288,13 +288,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/post/search?q=testing2",
+							"raw": "http://localhost:3000/api/post/search?q=testing2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
+								"api",
 								"post",
 								"search"
 							],
@@ -494,7 +495,7 @@
 	],
 	"variable": [
 		{
-			"id": "042cebf2-aa41-4b2a-a01e-fe5384b510b6",
+			"id": "171176f2-ae1a-4259-9911-5308bdcd63c8",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

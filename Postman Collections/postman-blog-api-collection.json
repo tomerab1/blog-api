@@ -367,7 +367,8 @@
 							}
 						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "http://localhost:3000/api/tags/1"
 					},
 					"response": []
 				},
@@ -496,7 +497,7 @@
 	],
 	"variable": [
 		{
-			"id": "5fa3c26c-9e83-4de4-8ee7-f6d1d3da50ea",
+			"id": "072ec9d7-9970-46d0-84fb-4539f7705187",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

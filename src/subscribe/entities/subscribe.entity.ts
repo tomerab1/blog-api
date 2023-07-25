@@ -7,20 +7,11 @@ import {
   Unique,
 } from 'typeorm';
 
-class SubscriptionPlan {
-  public readonly paid: boolean;
-  public readonly amount: number;
-  public readonly currency: string;
-}
-
 @Entity()
 @Unique(['subscriber', 'subscribedTo'])
 export class Subscribe {
   @PrimaryGeneratedColumn()
   public readonly id: number;
-
-  @Column({ default: null, type: 'json' })
-  public readonly plan: SubscriptionPlan;
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   public readonly subscribedAt: Date;

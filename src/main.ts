@@ -5,6 +5,7 @@ import { SerializeInterceptor } from './common/interceptors/serialize/serialize.
 import User from './user/entities/user.entity';
 import { TimeoutInterceptor } from './common/interceptors/timeout/timeout.interceptor';
 import { ConfigService } from '@nestjs/config';
+import { GLOBAL_PREFIX } from './common/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +24,8 @@ async function bootstrap() {
     new SerializeInterceptor(User),
     new TimeoutInterceptor(),
   );
+
+  app.setGlobalPrefix(GLOBAL_PREFIX);
 
   const configService = app.get(ConfigService);
   await app.listen(configService.get<number>('PORT'));

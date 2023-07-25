@@ -12,7 +12,6 @@ import { HealthModule } from './health/health.module';
 import { SubscribeModule } from './subscribe/subscribe.module';
 import { LoggerModule } from './logger/logger.module';
 import { SearchModule } from './search/search.module';
-import { PaymentsModule } from './payments/payments.module';
 import { ChatModule } from './chat/chat.module';
 import * as Joi from 'joi';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -31,7 +30,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     SubscribeModule,
     LoggerModule,
     SearchModule,
-    PaymentsModule,
     ChatModule,
     EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
@@ -52,8 +50,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
         ELASTICSEARCH_USERNAME: Joi.string().required(),
         ELASTICSEARCH_PASSWORD: Joi.string().required(),
         ELASTICSEARCH_NODE: Joi.string().required(),
-        STRIPE_PUBLISHABLE_KEY: Joi.string().required(),
-        STRIPE_SECRET_KEY: Joi.string().required(),
         BASE_URL: Joi.string().required(),
         PORT: Joi.number(),
         DB_MAX_RETRY: Joi.number().optional(),

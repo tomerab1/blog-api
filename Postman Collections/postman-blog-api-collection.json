@@ -545,7 +545,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "delete-comment",
 					"id": "3ac4bf26-c1ed-475f-b88c-da449ffad2ec",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -599,7 +599,7 @@
 	],
 	"variable": [
 		{
-			"id": "dfed45db-9856-4450-86bb-139a2d91460b",
+			"id": "ef28b033-79da-49da-b5a9-8b460980e77e",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

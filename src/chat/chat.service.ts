@@ -23,7 +23,11 @@ export class ChatService {
   ) {}
 
   getAuthenticatedUser(client: Socket) {
-    return this.authTokenService.verify(client);
+    try {
+      return this.authTokenService.verify(client);
+    } catch (error) {
+      throw new WsException(error);
+    }
   }
 
   async createRoom(client: Socket, createChatDto: CreateChatDto) {
@@ -44,7 +48,7 @@ export class ChatService {
       const savedChat = await this.chatRepository.save(room);
       return savedChat;
     } catch (error) {
-      throw new WsException(error);
+      throw error;
     }
   }
 
@@ -59,9 +63,6 @@ export class ChatService {
       });
 
       const user = await this.userService.findOne(client[REQUEST_USER_KEY].sub);
-
-      console.log(user.firstName);
-
       const message = await this.chatMessagesRepository.create({
         content: createMessageDto.text,
         owner: user,
@@ -75,7 +76,7 @@ export class ChatService {
 
       return savedMessage;
     } catch (error) {
-      throw new WsException(error);
+      throw error;
     }
   }
 

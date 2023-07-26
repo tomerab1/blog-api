@@ -16,12 +16,10 @@ export class WsExceptionFilter extends BaseWsExceptionFilter {
 
     if (exception instanceof HttpException) {
       prettyException['time'] = new Date().toISOString();
-      prettyException['message'] = exception.message;
-      prettyException['status'] = exception.getStatus();
+      prettyException['response'] = exception.getResponse();
     } else {
       prettyException['time'] = new Date().toISOString();
       prettyException['message'] = exception.message;
-      prettyException['error'] = exception.getError();
     }
 
     client.emit(EVENT_SOCKET_ERROR, prettyException);

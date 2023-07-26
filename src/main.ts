@@ -6,6 +6,7 @@ import User from './user/entities/user.entity';
 import { TimeoutInterceptor } from './common/interceptors/timeout/timeout.interceptor';
 import { ConfigService } from '@nestjs/config';
 import { GLOBAL_PREFIX } from './common/constants';
+import { WsExceptionFilter } from './chat/exception/ws-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,6 +25,8 @@ async function bootstrap() {
     new SerializeInterceptor(User),
     new TimeoutInterceptor(),
   );
+
+  app.useGlobalFilters(new WsExceptionFilter());
 
   app.setGlobalPrefix(GLOBAL_PREFIX);
 

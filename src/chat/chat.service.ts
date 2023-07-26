@@ -44,7 +44,7 @@ export class ChatService {
       const savedChat = await this.chatRepository.save(room);
       return savedChat;
     } catch (error) {
-      throw error;
+      throw new WsException(error);
     }
   }
 
@@ -75,7 +75,7 @@ export class ChatService {
 
       return savedMessage;
     } catch (error) {
-      throw error;
+      throw new WsException(error);
     }
   }
 

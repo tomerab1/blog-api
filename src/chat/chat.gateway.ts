@@ -3,6 +3,7 @@ import {
   SubscribeMessage,
   MessageBody,
   ConnectedSocket,
+  WsException,
 } from '@nestjs/websockets';
 import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create-chat.dto';
@@ -17,7 +18,20 @@ import { CreateMessageDto } from './dto/create-message.dto';
 import { Socket } from 'socket.io';
 import { FindChatDto } from './dto/find-chat.dto';
 import { DeleteChatDto } from './dto/delete-chat.dto';
+import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
+import { WsExceptionFilter } from './exception/ws-exception.filter';
 
+@UsePipes(
+  new ValidationPipe({
+    whitelist: true,
+    transform: true,
+    forbidNonWhitelisted: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }),
+)
+@UseFilters(WsExceptionFilter)
 @WebSocketGateway()
 export class ChatGateway {
   constructor(private readonly chatService: ChatService) {}

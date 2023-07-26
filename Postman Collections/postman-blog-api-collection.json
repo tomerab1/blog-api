@@ -100,7 +100,7 @@
 						},
 						"method": "GET",
 						"header": [],
-						"url": "http://localhost:3000/api/user/2"
+						"url": "http://localhost:3000/api/user/1"
 					},
 					"response": []
 				},
@@ -606,7 +606,7 @@
 	],
 	"variable": [
 		{
-			"id": "6d12cf51-6e55-49b5-b37d-d2a6a12122e0",
+			"id": "e54d44a1-b57d-4443-a1cf-2414cb48b426",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

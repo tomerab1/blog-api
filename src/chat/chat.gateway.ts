@@ -3,7 +3,6 @@ import {
   SubscribeMessage,
   MessageBody,
   ConnectedSocket,
-  WebSocketServer,
 } from '@nestjs/websockets';
 import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create-chat.dto';
@@ -16,6 +15,8 @@ import {
 } from './chat.events';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Socket } from 'socket.io';
+import { FindChatDto } from './dto/find-chat.dto';
+import { DeleteChatDto } from './dto/delete-chat.dto';
 
 @WebSocketGateway()
 export class ChatGateway {
@@ -39,18 +40,29 @@ export class ChatGateway {
   }
 
   @SubscribeMessage(EVENT_FIND_CHAT_ROOM_ALL)
-  async findAll(@ConnectedSocket() socket: Socket) {
-    const allRooms = await this.chatService.findAllRooms();
-    return socket.emit(EVENT_FIND_CHAT_ROOM_ALL, allRooms);
+  async findAll(@ConnectedSocket() client: Socket) {
+    const allRooms = await this.chatService.findAllRooms(client);
+    client.emit(EVENT_FIND_CHAT_ROOM_ALL, allRooms);
   }
 
   @SubscribeMessage(EVENT_FIND_CHAT_ROOM_ONE)
-  findOne(@MessageBody() id: number) {
-    return this.chatService.findOneRoom(id);
+  async findOne(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() findChatDto: FindChatDto,
+  ) {
+    const oneRoom = await this.chatService.findOneRoom(client, findChatDto.id);
+    client.emit(EVENT_FIND_CHAT_ROOM_ALL, oneRoom);
   }
 
   @SubscribeMessage(EVENT_DELETE_CHAT_ROOM)
-  remove(@MessageBody() id: number) {
-    return this.chatService.removeRoom(id);
+  remove(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() deleteChatDto: DeleteChatDto,
+  ) {
+    this.chatService.removeRoom(client, deleteChatDto.id);
+    client.emit(
+      EVENT_DELETE_CHAT_ROOM,
+      `Chat with id=${deleteChatDto.id} was deleted`,
+    );
   }
 }

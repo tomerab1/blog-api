@@ -60,10 +60,6 @@ export class ChatService {
         relations: { messages: true },
       });
 
-      const sender = await this.userService.findOne(
-        client[REQUEST_USER_KEY].sub,
-      );
-
       const message = await this.chatMessagesRepository.create({
         content: createMessageDto.text,
         chat: room,
@@ -80,11 +76,16 @@ export class ChatService {
     }
   }
 
-  async findAllRooms() {
+  async findAllRooms(client: Socket) {
+    if (!this.getAuthenticatedUser(client))
+      throw new WsException('Unauthorized');
     return await this.chatRepository.find();
   }
 
-  async findOneRoom(id: number) {
+  async findOneRoom(client: Socket, id: number) {
+    if (!this.getAuthenticatedUser(client))
+      throw new WsException('Unauthorized');
+
     const room = await this.chatRepository.findOne({
       where: { id },
       relations: { messages: true },
@@ -95,8 +96,11 @@ export class ChatService {
     return room;
   }
 
-  async removeRoom(id: number) {
-    const room = await this.findOneRoom(id);
+  async removeRoom(client: Socket, id: number) {
+    if (!this.getAuthenticatedUser(client))
+      throw new WsException('Unauthorized');
+
+    const room = await this.findOneRoom(client, id);
     return await this.chatRepository.remove(room);
   }
 }

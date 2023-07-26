@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Chat } from './chat.entity';
 import User from 'src/user/entities/user.entity';
 
@@ -12,6 +18,9 @@ export class ChatMessage {
 
   @Column()
   public readonly content: string;
+
+  @ManyToOne(() => User, (user: User) => user.messages)
+  public readonly owner: User;
 
   @ManyToOne(() => Chat, (chat: Chat) => chat.messages)
   public readonly chat: Chat;

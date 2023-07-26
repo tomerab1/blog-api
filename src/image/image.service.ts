@@ -51,7 +51,6 @@ export class ImageService {
     await this.uploadFileToS3(buffer, key);
     const user = await this.usersService.findOne(request[REQUEST_USER_KEY].sub);
 
-    console.log('here');
     const createdImage = this.imageRepository.create({
       key: key,
       uri: `https://${this.configService.get(
@@ -74,7 +73,6 @@ export class ImageService {
         }),
       );
     } catch (err) {
-      console.log(err);
       throw new InternalServerErrorException();
     }
   }
@@ -99,7 +97,6 @@ export class ImageService {
         }),
       );
     } catch (err) {
-      console.log(err);
       throw new InternalServerErrorException();
     }
   }

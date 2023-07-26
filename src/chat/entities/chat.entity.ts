@@ -13,6 +13,6 @@ export class Chat {
   })
   public readonly messages: ChatMessage[];
 
-  @ManyToMany(() => User, (user: User) => user.chats, { cascade: true })
+  @ManyToMany(() => User, (user: User) => user.chats)
   public readonly users: User[];
 }

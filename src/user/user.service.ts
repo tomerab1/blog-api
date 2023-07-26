@@ -32,6 +32,7 @@ export class UserService {
         subscribers: true,
         subscriptions: true,
         chats: true,
+        messages: true,
       },
     });
     if (!user) throw new NotFoundException();
@@ -58,7 +59,14 @@ export class UserService {
   public async delete(id: number) {
     const user = await this.findOne(id);
     this.userSearchService.deleteDocument(id.toString());
-    return this.usersRepository.remove(user);
+    return await this.usersRepository.remove(user);
+  }
+
+  async updateUser(id: number, updateData: User) {
+    const user = await this.usersRepository.preload({ id, ...updateData });
+    if (!user) throw new NotFoundException();
+    this.userSearchService.updateEntity(user);
+    return await this.usersRepository.save(user);
   }
 
   public async update(id: number, updateData: UpdateUserDto) {
@@ -68,6 +76,6 @@ export class UserService {
     });
     if (!user) throw new NotFoundException();
     this.userSearchService.updateEntity(user);
-    return this.usersRepository.save(user);
+    return await this.usersRepository.save(user);
   }
 }

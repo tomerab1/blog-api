@@ -51,7 +51,7 @@ export class ChatGateway {
     @MessageBody() findChatDto: FindChatDto,
   ) {
     const oneRoom = await this.chatService.findOneRoom(client, findChatDto.id);
-    client.emit(EVENT_FIND_CHAT_ROOM_ALL, oneRoom);
+    client.emit(EVENT_FIND_CHAT_ROOM_ONE, oneRoom);
   }
 
   @SubscribeMessage(EVENT_DELETE_CHAT_ROOM)

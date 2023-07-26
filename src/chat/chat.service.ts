@@ -31,8 +31,6 @@ export class ChatService {
       if (!this.getAuthenticatedUser(client))
         throw new WsException('Unauthorized');
 
-      console.log(client);
-
       const sender = await this.userService.findOne(
         client[REQUEST_USER_KEY].sub,
       );
@@ -60,8 +58,13 @@ export class ChatService {
         relations: { messages: true },
       });
 
+      const user = await this.userService.findOne(client[REQUEST_USER_KEY].sub);
+
+      console.log(user.firstName);
+
       const message = await this.chatMessagesRepository.create({
         content: createMessageDto.text,
+        owner: user,
         chat: room,
       });
 
@@ -101,6 +104,14 @@ export class ChatService {
       throw new WsException('Unauthorized');
 
     const room = await this.findOneRoom(client, id);
-    return await this.chatRepository.remove(room);
+
+    if (!room) throw new WsException(`Room with id=${id} was not found`);
+
+    const user = await this.userService.findOne(client[REQUEST_USER_KEY].sub);
+
+    const filteredChats = user.chats.filter((chat) => chat.id !== id);
+    Object.assign(user, { chats: filteredChats });
+
+    await this.userService.updateUser(user.id, user);
   }
 }

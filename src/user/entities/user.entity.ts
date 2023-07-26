@@ -1,5 +1,6 @@
 import { Exclude, Expose } from 'class-transformer';
 import { Chat } from 'src/chat/entities/chat.entity';
+import { ChatMessage } from 'src/chat/entities/message.entity';
 import Comment from 'src/comment/entities/comment.entity';
 import Image from 'src/image/entities/image.entity';
 import Post from 'src/post/entities/post.entity';
@@ -54,7 +55,10 @@ export default class User {
   @OneToMany(() => Comment, (comment: Comment) => comment.author)
   public readonly comments: Comment[];
 
-  @ManyToMany(() => Chat, (chat: Chat) => chat.users)
+  @ManyToMany(() => Chat, (chat: Chat) => chat.users, { cascade: true })
   @JoinTable()
   public readonly chats: Chat[];
+
+  @OneToMany(() => ChatMessage, (msg: ChatMessage) => msg.owner)
+  public readonly messages: ChatMessage[];
 }

@@ -20,18 +20,10 @@ import { FindChatDto } from './dto/find-chat.dto';
 import { DeleteChatDto } from './dto/delete-chat.dto';
 import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
 import { WsExceptionFilter } from './exception/ws-exception.filter';
+import { WsValidationPipe } from './decorator/ws-decorator.decorator';
 
-@UsePipes(
-  new ValidationPipe({
-    whitelist: true,
-    transform: true,
-    forbidNonWhitelisted: true,
-    transformOptions: {
-      enableImplicitConversion: true,
-    },
-  }),
-)
 @UseFilters(WsExceptionFilter)
+@WsValidationPipe()
 @WebSocketGateway()
 export class ChatGateway {
   constructor(private readonly chatService: ChatService) {}

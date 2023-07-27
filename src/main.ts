@@ -26,8 +26,6 @@ async function bootstrap() {
     new TimeoutInterceptor(),
   );
 
-  app.useGlobalFilters(new WsExceptionFilter());
-
   app.setGlobalPrefix(GLOBAL_PREFIX);
 
   const configService = app.get(ConfigService);

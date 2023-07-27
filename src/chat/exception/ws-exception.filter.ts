@@ -7,11 +7,16 @@ const EVENT_SOCKET_ERROR = 'error';
 @Catch(WsException, HttpException)
 export class WsExceptionFilter extends BaseWsExceptionFilter {
   catch(exception: HttpException | WsException, host: ArgumentsHost) {
-    const client = host.switchToWs().getClient<Socket>();
-    this.errorHandler(client, exception);
+    this.errorHandler(exception, host);
   }
 
-  errorHandler(client: Socket, exception: HttpException | WsException) {
+  errorHandler(exception: HttpException | WsException, host: ArgumentsHost) {
+    const response = this.getPrettyResponse(exception);
+    const client = host.switchToWs().getClient<Socket>();
+    client.emit(EVENT_SOCKET_ERROR, response);
+  }
+
+  getPrettyResponse(exception: HttpException | WsException) {
     const prettyException = {};
 
     if (exception instanceof HttpException) {
@@ -22,6 +27,6 @@ export class WsExceptionFilter extends BaseWsExceptionFilter {
       prettyException['message'] = exception.message;
     }
 
-    client.emit(EVENT_SOCKET_ERROR, prettyException);
+    return prettyException;
   }
 }

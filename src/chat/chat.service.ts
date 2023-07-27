@@ -26,7 +26,7 @@ export class ChatService {
     try {
       return this.authTokenService.verify(client);
     } catch (error) {
-      throw new WsException(error);
+      throw new error();
     }
   }
 

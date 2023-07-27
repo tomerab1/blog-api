@@ -158,7 +158,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"tomer1452002@gmail.com\",\r\n    \"password\": \"12345678!\"\r\n}",
+							"raw": "{\r\n    \"email\": \"tomer1452002@gmail.com\",\r\n    \"password\": \"12345678a!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -606,7 +606,7 @@
 	],
 	"variable": [
 		{
-			"id": "f7a92d21-6f47-47d2-b017-ec0b4e3b8e9c",
+			"id": "af2eb9b1-4a30-45b6-b2cb-3d5d78af03c2",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

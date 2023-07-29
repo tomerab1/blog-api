@@ -439,12 +439,6 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "oauth2",
-							"oauth2": {
-								"addTokenTo": "header"
-							}
-						},
 						"method": "PATCH",
 						"header": [],
 						"body": {

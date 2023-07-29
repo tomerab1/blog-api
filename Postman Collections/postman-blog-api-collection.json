@@ -604,9 +604,37 @@
 			"id": "83fb8160-ed6c-4bd8-a4d5-e768228d57c0"
 		}
 	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": {
+			"addTokenTo": "header"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aac26ec4-c3b7-4bbf-b4f5-6b61f151f692",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6d9756e9-f14c-4bd0-99b2-4c97e4cb1abe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "af2eb9b1-4a30-45b6-b2cb-3d5d78af03c2",
+			"id": "d946912a-4d5c-4e70-9354-6cc9e2cbc223",
 			"key": "$jwtToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}

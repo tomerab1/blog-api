@@ -385,12 +385,6 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "oauth2",
-							"oauth2": {
-								"addTokenTo": "header"
-							}
-						},
 						"method": "GET",
 						"header": [],
 						"url": "http://localhost:3000/api/subscribe/"

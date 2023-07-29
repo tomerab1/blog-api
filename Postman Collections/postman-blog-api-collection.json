@@ -614,7 +614,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "aac26ec4-c3b7-4bbf-b4f5-6b61f151f692",
+				"id": "50125eb4-d6e3-403b-a51e-788a07e0cb61",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -624,19 +624,12 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "6d9756e9-f14c-4bd0-99b2-4c97e4cb1abe",
+				"id": "aa070cb4-3a7b-4122-9d88-4c42e96a045f",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"id": "d946912a-4d5c-4e70-9354-6cc9e2cbc223",
-			"key": "$jwtToken",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJlbWFpbCI6InRvbWVyMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5MDA0OTgwOSwiZXhwIjoxNjkwMDUzNDA5LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.MMv-oJ-7VzE7jAJy7mej5WEVfjJgS9fD_H3T3QP6E0w"
 		}
 	]
 }
